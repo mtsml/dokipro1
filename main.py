@@ -8,7 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    FollowEvent, MessageEvent, TextMessage, TextSendMessage
+    UnfollowEvent, FollowEvent, MessageEvent, TextMessage, TextSendMessage
 )
 
 import boto3
@@ -82,7 +82,7 @@ def on_follow(event):
         messages=TextSendMessage(text='登録ありがとう')
     )
 
-@handler.add(FollowEvent)
+@handler.add(UnFollowEvent)
 def on_follow(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
