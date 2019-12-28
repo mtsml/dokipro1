@@ -11,6 +11,10 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
+import boto3
+import json
+from boto3.dynamodb.conditions import Key, Attr
+
 app = Flask(__name__)
 
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
@@ -51,11 +55,8 @@ def handle_message(event):
     print('user_id: ' + user_id)
     print('message: ' + event.message.text)
 
-    if '好き' in event.message.text:
-        text='私も好き'
-    else:
-        text=event.message.text
-    
+    text='Your name is ' + get_display_name(user_id)
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=text))
@@ -64,6 +65,16 @@ def push_message(user_id):
     line_bot_api.push_message(
         to=user_id,
         messages=TextSendMessage(text='プッシュ送信'))
+
+def get_display_name(user_id):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('dokipro1')
+    items = table.get_item(
+            Key={
+                 "user_id": user_id
+            }
+        )
+    return items['Item']['display_name']
 
 if __name__ == "__main__":
     # app.run()
