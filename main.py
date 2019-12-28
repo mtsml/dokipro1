@@ -60,7 +60,7 @@ def handle_message(event):
 def push_message(user_id):
     line_bot_api.push_message(
         to=user_id,
-        message=TextSendMessage(text='プッシュ送信'))
+        messages=TextSendMessage(text='プッシュ送信'))
 
 if __name__ == "__main__":
     # app.run()
