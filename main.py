@@ -39,14 +39,16 @@ def callback():
 
 @app.route("/index")
 def index():
-    print('index access')
     push_message('U83ec507bb50826ce2df5a4fa13b112d3')
     return 'Hello World!'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print('user_id')
-    print(event.source.user_id)
+    user_id = event.source.user_id
+    profiles = line_bot_api.get_profile(user_id=user_id)
+    display_name = profiles.display_name
+    print('name:' + display_name)
+    print('user_id:' + user_id)
 
     if '好き' in event.message.text:
         text='私も好き'
