@@ -53,8 +53,12 @@ def handle_message(event):
     print('user_id: ', user_id)
     print('message: ', event.message.text)
 
+    key = {
+        'user_id': user_id
+    }
+
     # love point増加
-    upd_love_point(user_id, LOVE_POINT_OF_MESSAGE)
+    upd_love_point(key, LOVE_POINT_OF_MESSAGE)
 
     line_bot_api.reply_message(
         event.reply_token,
