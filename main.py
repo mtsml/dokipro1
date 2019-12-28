@@ -2,7 +2,7 @@ from flask import Flask, request, abort, render_template
 import os
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage
+from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
 import boto3
 import json
 
@@ -18,6 +18,13 @@ handler = WebhookHandler(CHANNEL_SECRET)
 AWS_REGION = 'ap-northeast-1'
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+# love point
+LOVE_POINT_DEFAULT = 0
+LOVE_POINT_OF_MESSAGE = 1
+
+# Template Messages
+MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -37,25 +44,20 @@ def callback():
 
     return 'OK'
 
-@app.route("/index")
-def index():
-    push_message('U83ec507bb50826ce2df5a4fa13b112d3')
-    return 'Hello World!'
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    print('name: ' + display_name)
-    print('user_id: ' + user_id)
-    print('message: ' + event.message.text)
+    print('name: ', display_name)
+    print('user_id: ', user_id)
+    print('message: ', event.message.text)
 
-    text='Your name is ' + get_display_name(user_id)
+    upd_love_point(LOVE_POINT_OF_MESSAGE)
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=text))
+        TextSendMessage(text=event.message.text))
 
 @handler.add(FollowEvent)
 def handle_follow_event(event):
@@ -63,10 +65,12 @@ def handle_follow_event(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
+    text = MESSAGE_AFTER_FOLLOW.format(display_name)
 
     items = {
         'user_id': user_id,
-        'display_name': display_name
+        'display_name': display_name,
+        'love_point': LOVE_POINT_DEFAULT
     }
 
     # ユーザー情報をDBに保存
@@ -75,10 +79,10 @@ def handle_follow_event(event):
     # メッセージの送信
     line_bot_api.reply_message(
         reply_token=reply_token,
-        messages=TextSendMessage(text='登録ありがとう')
+        messages=TextSendMessage(text=text)
     )
 
-@handler.add(UnFollowEvent)
+@handler.add(UnfollowEvent)
 def handle_unfollow_event(event):
     user_id = event.source.user_id
 
@@ -89,25 +93,13 @@ def handle_unfollow_event(event):
     # ユーザー情報をDBから削除
     del_user_info(key)
 
-def push_message(user_id):
-    line_bot_api.push_message(
-        to=user_id,
-        messages=TextSendMessage(text='プッシュ送信'))
-
-def get_display_name(user_id):
+def conn_dynamodb():
     session = boto3.session.Session(
-        region_name='ap-northeast-1',
-        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+        region_name=AWS_REGION,
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
     )
-    dynamodb = session.resource('dynamodb')
-    table = dynamodb.Table('dokipro1')
-    items = table.get_item(
-            Key={
-                 "user_id": user_id
-            }
-        )
-    return items['Item']['display_name']
+    return session
 
 def set_user_info(items):
     session = conn_dynamodb()
@@ -141,13 +133,18 @@ def del_user_info(key):
         # 成功処理
         print('Successed :', key['user_id'])
 
-def conn_dynamodb():
-    session = boto3.session.Session(
-        region_name=AWS_REGION,
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+def upd_love_point(key, point):
+    session = conn_dynamodb()
+    dynamodb = session.resource('dynamodb')
+    table = dynamodb.Table('dokipro1')
+
+    response = table.update_item(
+        Key=key,
+        UpdateExpression="set love_point = love_point + :val",
+        ExpressionAttributeValues={
+            ':val': point
+        }
     )
-    return session
 
 if __name__ == "__main__":
     port = int(os.environ["PORT"])
