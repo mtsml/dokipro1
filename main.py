@@ -43,6 +43,7 @@ def index():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print('user_id')
     print(event.source.user_id)
     app.logger.info(event.source.user_id)
 
