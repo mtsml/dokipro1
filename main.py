@@ -67,7 +67,12 @@ def push_message(user_id):
         messages=TextSendMessage(text='プッシュ送信'))
 
 def get_display_name(user_id):
-    dynamodb = boto3.resource('dynamodb')
+    session = boto3.session.Session(
+        region_name='ap-northeast-1',
+        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+    )
+    dynamodb = session.resource('dynamodb')
     table = dynamodb.Table('dokipro1')
     items = table.get_item(
             Key={
