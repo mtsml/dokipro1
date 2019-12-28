@@ -8,7 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    FollowEvent, MessageEvent, TextMessage, TextSendMessage
 )
 
 import boto3
@@ -61,6 +61,29 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=text))
 
+@handler.add(FollowEvent)
+def on_follow(event):
+    reply_token = event.reply_token
+    user_id = event.source.user_id
+    profiles = line_bot_api.get_profile(user_id=user_id)
+    display_name = profiles.display_name
+    picture_url = profiles.picture_url
+    status_message = profiles.status_message
+
+    items = {
+        'user_id': user_id,
+        'display_name': display_name,
+    }
+
+    # ユーザー情報をDBに保存
+    set_user_info(items)
+
+    # メッセージの送信
+    line_bot_api.reply_message(
+        reply_token=reply_token,
+        messages=TextSendMessage(text='登録ありがとう')
+    )
+
 def push_message(user_id):
     line_bot_api.push_message(
         to=user_id,
@@ -80,6 +103,29 @@ def get_display_name(user_id):
             }
         )
     return items['Item']['display_name']
+
+def set_user_info(items):
+    session = boto3.session.Session(
+        region_name='ap-northeast-1',
+        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+    )
+    dynamodb = session.resource('dynamodb')
+    table = dynamodb.Table('dokipro1')
+
+    response = table.put_item(
+            TableName=table,
+            Item=items
+        )
+
+    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
+        # 失敗処理
+        print('Error :', response)
+    else:
+        # 成功処理
+        print('Successed :', items['user_id'])
+    
+    return
 
 if __name__ == "__main__":
     # app.run()
