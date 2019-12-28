@@ -67,8 +67,6 @@ def on_follow(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    picture_url = profiles.picture_url
-    status_message = profiles.status_message
 
     items = {
         'user_id': user_id,
@@ -83,6 +81,19 @@ def on_follow(event):
         reply_token=reply_token,
         messages=TextSendMessage(text='登録ありがとう')
     )
+
+@handler.add(FollowEvent)
+def on_follow(event):
+    user_id = event.source.user_id
+    profiles = line_bot_api.get_profile(user_id=user_id)
+    display_name = profiles.display_name
+
+    key = {
+        'user_id': user_id
+    }
+
+    # ユーザー情報をDBから削除
+    del_user_info(key)
 
 def push_message(user_id):
     line_bot_api.push_message(
@@ -123,6 +134,28 @@ def set_user_info(items):
     else:
         # 成功処理
         print('Successed :', items['user_id'])
+    
+    return
+
+def del_user_info(key):
+    session = boto3.session.Session(
+        region_name='ap-northeast-1',
+        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+    )
+    dynamodb = session.resource('dynamodb')
+    table = dynamodb.Table('dokipro1')
+
+    response = table.delete_item(
+            Key=key
+        )
+
+    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
+        # 失敗処理
+        print('Error :', response)
+    else:
+        # 成功処理
+        print('Successed :', key['user_id'])
     
     return
 
