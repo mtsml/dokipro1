@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, render_template
 import os
 
 from linebot import (
@@ -56,8 +56,13 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=text))
 
+def push_message(user_id):
+    line_bot_api.push_message(
+        to=user_id,
+        message=TextSendMessage(text='プッシュ送信'))
 
 if __name__ == "__main__":
     # app.run()
     port = int(os.environ["PORT"])
     app.run(host="0.0.0.0", port=port)
+    push_message('U83ec507bb50826ce2df5a4fa13b112d3')
