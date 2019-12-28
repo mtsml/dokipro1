@@ -72,7 +72,7 @@ def on_follow(event):
 
     items = {
         'user_id': user_id,
-        'display_name': display_name,
+        'display_name': display_name
     }
 
     # ユーザー情報をDBに保存
@@ -114,7 +114,6 @@ def set_user_info(items):
     table = dynamodb.Table('dokipro1')
 
     response = table.put_item(
-            TableName=table,
             Item=items
         )
 
