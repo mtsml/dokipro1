@@ -47,8 +47,9 @@ def handle_message(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    print('name:' + display_name)
-    print('user_id:' + user_id)
+    print('name: ' + display_name)
+    print('user_id: ' + user_id)
+    print('message: ' + event.message.text)
 
     if '好き' in event.message.text:
         text='私も好き'
