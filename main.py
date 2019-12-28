@@ -8,7 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    UnfollowEvent, FollowEvent, MessageEvent, TextMessage, TextSendMessage
+    UnFollowEvent, FollowEvent, MessageEvent, TextMessage, TextSendMessage
 )
 
 import boto3
