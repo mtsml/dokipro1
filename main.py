@@ -39,13 +39,14 @@ def callback():
 
 @app.route("/index")
 def index():
+    print('index access')
+    push_message('U83ec507bb50826ce2df5a4fa13b112d3')
     return 'Hello World!'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     print('user_id')
     print(event.source.user_id)
-    app.logger.info(event.source.user_id)
 
     if '好き' in event.message.text:
         text='私も好き'
@@ -65,4 +66,3 @@ if __name__ == "__main__":
     # app.run()
     port = int(os.environ["PORT"])
     app.run(host="0.0.0.0", port=port)
-    push_message('U83ec507bb50826ce2df5a4fa13b112d3')
