@@ -46,7 +46,7 @@ def callback():
 
     return 'OK'
 
-@app.route("index.html")
+@app.route("/index.html")
 def index():
     items = get_user_info_all()
     return render_template("index.html", items=items)
