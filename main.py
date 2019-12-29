@@ -51,7 +51,8 @@ def handle_message(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    dt = datetime.datetime.fromtimestamp(event.timestamp)
+    timestamp = event.timestamp
+    dt = datetime.datetime.fromtimestamp(timestamp[:10])
     print('name: ', display_name)
     print('user_id: ', user_id)
     print('message: ', event.message.text)
