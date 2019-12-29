@@ -150,8 +150,9 @@ def upd_user_info(key, point, timestamp):
 
     response = table.update_item(
         Key=key,
-        UpdateExpression="set message_count = message_count + 1, love_point = love_point + :p, last_datetime = :d",
+        UpdateExpression="set message_count = message_count + :c, love_point = love_point + :p, last_datetime = :d",
         ExpressionAttributeValues={ 
+            ':c': 1,
             ':p': point,
             ':d': timestamp
         }
