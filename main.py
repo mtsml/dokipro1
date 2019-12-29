@@ -46,6 +46,11 @@ def callback():
 
     return 'OK'
 
+@app.route("index.html")
+def index():
+    items = get_user_info_all()
+    return render_template("index.html", items=items)
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     user_id = event.source.user_id
@@ -163,6 +168,21 @@ def upd_user_info(key, point, timestamp):
     else:
         # 成功処理
         print('Successed :', key['user_id'])
+
+def get_user_info_all():
+    session = conn_dynamodb()
+    dynamodb = session.resource('dynamodb')
+    table = dynamodb.Table('dokipro1')
+
+    response = table.scan()
+
+    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
+        # 失敗処理
+        print('Error :', response)
+    else:
+        # 成功処理
+        print('Successed :', response['Items'])
+        return response['Items']
 
 
 if __name__ == "__main__":
