@@ -5,6 +5,8 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
 import boto3
 import json
+import datetime
+import random
 
 app = Flask(__name__)
 
@@ -49,18 +51,19 @@ def handle_message(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    timestamp = event.timestamp
+    dt = datetime.datetime.fromtimestamp(event.timestamp)
     print('name: ', display_name)
     print('user_id: ', user_id)
-    print('timestamp: ', timestamp)
     print('message: ', event.message.text)
 
     key = {
         'user_id': user_id
     }
 
-    # love point増加
-    upd_love_point(key, LOVE_POINT_OF_MESSAGE)
+    point = LOVE_POINT_OF_MESSAGE + random.randrange(10)
+
+    # ユーザー情報更新
+    upd_user_info(key, point, dt)
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -140,18 +143,26 @@ def del_user_info(key):
         # 成功処理
         print('Successed :', key['user_id'])
 
-def upd_love_point(key, point):
+def upd_user_info(key, point, dt):
     session = conn_dynamodb()
     dynamodb = session.resource('dynamodb')
     table = dynamodb.Table('dokipro1')
 
     response = table.update_item(
         Key=key,
-        UpdateExpression="set love_point = love_point + :val",
-        ExpressionAttributeValues={
-            ':val': point
+        UpdateExpression="set message_count = message_count + 1, love_point = love_point + :p, last_datetime = :d",
+        ExpressionAttributeValues={ 
+            ':p': point,
+            ':d': dt
         }
     )
+    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
+        # 失敗処理
+        print('Error :', response)
+    else:
+        # 成功処理
+        print('Successed :', key['user_id'])
+
 
 if __name__ == "__main__":
     port = int(os.environ["PORT"])
