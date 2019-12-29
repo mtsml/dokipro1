@@ -52,7 +52,6 @@ def handle_message(event):
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
     timestamp = event.timestamp
-    dt = datetime.datetime.fromtimestamp(round(timestamp/1000))
     print('name: ', display_name)
     print('user_id: ', user_id)
     print('message: ', event.message.text)
@@ -64,7 +63,7 @@ def handle_message(event):
     point = LOVE_POINT_OF_MESSAGE + random.randrange(10)
 
     # ユーザー情報更新
-    upd_user_info(key, point, dt)
+    upd_user_info(key, point, timestamp)
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -144,7 +143,7 @@ def del_user_info(key):
         # 成功処理
         print('Successed :', key['user_id'])
 
-def upd_user_info(key, point, dt):
+def upd_user_info(key, point, timestamp):
     session = conn_dynamodb()
     dynamodb = session.resource('dynamodb')
     table = dynamodb.Table('dokipro1')
@@ -154,7 +153,7 @@ def upd_user_info(key, point, dt):
         UpdateExpression="set message_count = message_count + 1, love_point = love_point + :p, last_datetime = :d",
         ExpressionAttributeValues={ 
             ':p': point,
-            ':d': dt
+            ':d': timestamp
         }
     )
     if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
