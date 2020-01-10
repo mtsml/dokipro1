@@ -7,6 +7,7 @@ import boto3
 import json
 import datetime
 import random
+import pya3rt
 
 app = Flask(__name__)
 
@@ -21,12 +22,16 @@ AWS_REGION = 'ap-northeast-1'
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
+# A3RT
+A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
+
 # love point
 LOVE_POINT_DEFAULT = 0
 LOVE_POINT_OF_MESSAGE = 1
 
 # Template Messages
 MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
+MESSAGE_REPLY_DEFAULT = '認識できませんでした'
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -70,9 +75,12 @@ def handle_message(event):
     # ユーザー情報更新
     upd_user_info(key, point, timestamp)
 
+    # 返答メッセージを取得する
+    reply = get_reply_message(event.message.text)
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=reply))
 
 @handler.add(FollowEvent)
 def handle_follow_event(event):
@@ -107,6 +115,19 @@ def handle_unfollow_event(event):
 
     # ユーザー情報をDBから削除
     del_user_info(key)
+
+def get_reply_message(text):
+    client = pya3rt.TalkClient(A3RT_TALK_API_KEY)
+    res = client.talk(message.body['text'])
+    print(res)
+
+    # 正常終了以外はデフォルトメッセージを返却する
+    if res['status'] != 0:
+        return MESSAGE_REPLY_DEFAULT
+    
+    reply = res['results'][0]['reply']
+    print(reply)
+    return reply
 
 def conn_dynamodb():
     session = boto3.session.Session(
