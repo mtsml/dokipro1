@@ -9,7 +9,9 @@ import datetime
 import random
 import pya3rt
 
+
 app = Flask(__name__)
+
 
 # LINE Messesaging API
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
@@ -17,21 +19,26 @@ CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
+
 # AWS
 AWS_REGION = 'ap-northeast-1'
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
+
 # A3RT
 A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
+
 
 # love point
 LOVE_POINT_DEFAULT = 0
 LOVE_POINT_OF_MESSAGE = 1
 
+
 # Template Messages
 MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
 MESSAGE_REPLY_DEFAULT = '認識できませんでした'
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -51,10 +58,12 @@ def callback():
 
     return 'OK'
 
+
 @app.route("/index.html")
 def index():
     items = get_user_info_all()
     return render_template("index.html", items=items)
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -82,6 +91,7 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=reply))
 
+
 @handler.add(FollowEvent)
 def handle_follow_event(event):
     reply_token = event.reply_token
@@ -105,6 +115,7 @@ def handle_follow_event(event):
         messages=TextSendMessage(text=text)
     )
 
+
 @handler.add(UnfollowEvent)
 def handle_unfollow_event(event):
     user_id = event.source.user_id
@@ -115,6 +126,7 @@ def handle_unfollow_event(event):
 
     # ユーザー情報をDBから削除
     del_user_info(key)
+
 
 def get_reply_message(text):
     client = pya3rt.TalkClient(A3RT_TALK_API_KEY)
@@ -129,6 +141,7 @@ def get_reply_message(text):
     print(reply)
     return reply
 
+
 def conn_dynamodb():
     session = boto3.session.Session(
         region_name=AWS_REGION,
@@ -136,6 +149,7 @@ def conn_dynamodb():
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY
     )
     return session
+
 
 def set_user_info(items):
     session = conn_dynamodb()
@@ -153,6 +167,7 @@ def set_user_info(items):
         # 成功処理
         print('Successed :', items['user_id'])
 
+
 def del_user_info(key):
     session = conn_dynamodb()
     dynamodb = session.resource('dynamodb')
@@ -168,6 +183,7 @@ def del_user_info(key):
     else:
         # 成功処理
         print('Successed :', key['user_id'])
+
 
 def upd_user_info(key, point, timestamp):
     session = conn_dynamodb()
@@ -189,6 +205,7 @@ def upd_user_info(key, point, timestamp):
     else:
         # 成功処理
         print('Successed :', key['user_id'])
+
 
 def get_user_info_all():
     session = conn_dynamodb()
