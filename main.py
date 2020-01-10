@@ -130,7 +130,7 @@ def handle_unfollow_event(event):
 
 def get_reply_message(text):
     client = pya3rt.TalkClient(A3RT_TALK_API_KEY)
-    res = client.talk(message.body['text'])
+    res = client.talk(text)
     print(res)
 
     # 正常終了以外はデフォルトメッセージを返却する
