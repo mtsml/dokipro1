@@ -52,13 +52,14 @@ def fortune_today(seiza):
     rank_list = soup.find_all('div', class_='rankArea')
 
     info = get_rank_info(rank_list, seiza)
+
     text = 'おはようございます。\n'
     text += seiza + 'の今日の運勢は' + info.a.div.find_all('span')[0].get_text() + 'です。\n\n'
 
-
     for t in info.section.div.p.get_text(',').split(','):
         text += t + '\n'
-    
+
+    # 見やすくするため一行開ける
     text += '\n'
 
     for t in info.section.div.table.find_all('tr')[0].th.get_text(',').split(','):
