@@ -62,12 +62,9 @@ def fortune_today(seiza):
     # 見やすくするため一行開ける
     text += '\n'
 
-    for t in info.section.div.table.find_all('tr')[0].th.get_text(',').split(','):
+    for t in info.section.div.table.get_text(',').split(','):
         text += t + '\n'
     
-    for t in info.section.div.table.find_all('tr')[1].td.get_text(',').split(','):
-        text += t + '\n'
-
     return text
 
 
