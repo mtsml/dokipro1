@@ -63,6 +63,7 @@ def fortune_today(seiza):
     text += '\n'
 
     for t in info.section.div.table.get_text(',').split(','):
+        if t == '\n' : continue
         text += t + '\n'
     
     return text
