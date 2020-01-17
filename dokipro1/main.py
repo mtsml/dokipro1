@@ -3,12 +3,11 @@ import os
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
-import boto3
 import json
 import datetime
 import random
 import pya3rt
-
+import dynamo
 
 app = Flask(__name__)
 
@@ -16,14 +15,8 @@ app = Flask(__name__)
 # LINE Messesaging API
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
 CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
+line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
 handler = WebhookHandler(CHANNEL_SECRET)
-
-
-# AWS
-AWS_REGION = 'ap-northeast-1'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 
 # A3RT
@@ -61,7 +54,7 @@ def callback():
 
 @app.route("/index.html")
 def index():
-    items = get_user_info_all()
+    items = dynamo.get_user_info_all()
     return render_template("index.html", items=items)
 
 
@@ -82,7 +75,7 @@ def handle_message(event):
     point = LOVE_POINT_OF_MESSAGE + random.randrange(10)
 
     # ユーザー情報更新
-    upd_user_info(key, point, timestamp)
+    dynamo.upd_user_info(key, point, timestamp)
 
     # 返答メッセージを取得する
     reply = get_reply_message(event.message.text)
@@ -107,7 +100,7 @@ def handle_follow_event(event):
     }
 
     # ユーザー情報をDBに保存
-    set_user_info(items)
+    dynamo.set_user_info(items)
 
     # メッセージの送信
     line_bot_api.reply_message(
@@ -125,7 +118,7 @@ def handle_unfollow_event(event):
     }
 
     # ユーザー情報をDBから削除
-    del_user_info(key)
+    dynamo.del_user_info(key)
 
 
 def get_reply_message(text):
@@ -140,87 +133,6 @@ def get_reply_message(text):
     reply = res['results'][0]['reply']
     print(reply)
     return reply
-
-
-def conn_dynamodb():
-    session = boto3.session.Session(
-        region_name=AWS_REGION,
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-    )
-    return session
-
-
-def set_user_info(items):
-    session = conn_dynamodb()
-    dynamodb = session.resource('dynamodb')
-    table = dynamodb.Table('dokipro1')
-
-    response = table.put_item(
-            Item=items
-        )
-
-    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
-        # 失敗処理
-        print('Error :', response)
-    else:
-        # 成功処理
-        print('Successed :', items['user_id'])
-
-
-def del_user_info(key):
-    session = conn_dynamodb()
-    dynamodb = session.resource('dynamodb')
-    table = dynamodb.Table('dokipro1')
-
-    response = table.delete_item(
-            Key=key
-        )
-
-    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
-        # 失敗処理
-        print('Error :', response)
-    else:
-        # 成功処理
-        print('Successed :', key['user_id'])
-
-
-def upd_user_info(key, point, timestamp):
-    session = conn_dynamodb()
-    dynamodb = session.resource('dynamodb')
-    table = dynamodb.Table('dokipro1')
-
-    response = table.update_item(
-        Key=key,
-        UpdateExpression="set message_count = message_count + :c, love_point = love_point + :p, last_datetime = :d",
-        ExpressionAttributeValues={ 
-            ':c': 1,
-            ':p': point,
-            ':d': timestamp
-        }
-    )
-    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
-        # 失敗処理
-        print('Error :', response)
-    else:
-        # 成功処理
-        print('Successed :', key['user_id'])
-
-
-def get_user_info_all():
-    session = conn_dynamodb()
-    dynamodb = session.resource('dynamodb')
-    table = dynamodb.Table('dokipro1')
-
-    response = table.scan()
-
-    if response['ResponseMetadata']['HTTPStatusCode'] is not 200:
-        # 失敗処理
-        print('Error :', response)
-    else:
-        # 成功処理
-        print('Successed :', response['Items'])
-        return response['Items']
 
 
 if __name__ == "__main__":
