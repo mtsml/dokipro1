@@ -1,1 +1,1 @@
-web: python main.py
+web: python dokipro1/main.py
