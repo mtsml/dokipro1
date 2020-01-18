@@ -26,21 +26,17 @@ def main():
     items = dynamo.get_user_info_all()
 
     for item in items:
-        msg = fortune_today(item['seiza'])
-        print('FORTUNE!')
-        print('name: ', item['display_name'])
-        print('message: ', msg)
-        send_message(item['user_id'], msg)
-  
-    # remember_me()
+        fortune_today(item)
+        remember_me(item)
 
     return
 
 
-def fortune_today(seiza):
+def fortune_today(item):
     res = requests.get(URL_MEZAMASHI_URANAI)
     soup = BeautifulSoup(res.text, 'html.parser')
     rank_list = soup.find_all('div', class_='rankArea')
+    seiza = item['seiza']
 
     info = get_rank_info(rank_list, seiza)
 
@@ -57,7 +53,10 @@ def fortune_today(seiza):
         if t == '\n' : continue
         text += t + '\n'
     
-    return text
+    print('FORTUNE!')
+    print('name: ', item['display_name'])
+    print('message: ', text)
+    send_message(item['user_id'], text)
 
 
 def get_rank_info(rank_list, seiza):
@@ -66,23 +65,20 @@ def get_rank_info(rank_list, seiza):
             return rank
 
 
-def remember_me():
-    items = get_user_info_all()
-
+def remember_me(item):
     ut = time.time()
 
-    for item in items:
-        diff = int(ut)-int(item['last_datetime']/1000)
-        if diff > CONFIG_LONG_TIME_NO_SEE:
-            print('LONG TIME NO SEE!')
-            print('name: ', item['display_name'])
-            send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
-            print('message: ', MESSAGE_LONG_TIME_NO_SEE)
+    diff = int(ut)-int(item['last_datetime']/1000)
+    if diff > CONFIG_LONG_TIME_NO_SEE:
+        print('LONG TIME NO SEE!')
+        print('name: ', item['display_name'])
+        print('message: ', MESSAGE_LONG_TIME_NO_SEE)
+        send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
 
 
 def send_message(user_id, text):
     line_bot_api.push_message(
-        user_id, TextSendMessage(text=msg))
+        user_id, TextSendMessage(text=text))
 
 
 if __name__ == '__main__':
