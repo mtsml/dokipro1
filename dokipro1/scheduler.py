@@ -2,10 +2,15 @@ import json
 import os
 import time
 from bs4 import BeautifulSoup
+from linebot import LineBotApi
+from linebot.models import TextSendMessage
 import requests
 import dynamo
-import line
 
+
+# LINE Messesaging API
+CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
+line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
 
 # めざまし占い
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
@@ -25,7 +30,7 @@ def main():
         print('FORTUNE!')
         print('name: ', item['display_name'])
         print('message: ', msg)
-        linebot.send_message(item['user_id'], msg)
+        send_message(item['user_id'], msg)
   
     # remember_me()
 
@@ -71,8 +76,13 @@ def remember_me():
         if diff > CONFIG_LONG_TIME_NO_SEE:
             print('LONG TIME NO SEE!')
             print('name: ', item['display_name'])
-            linebot.send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
+            send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
             print('message: ', MESSAGE_LONG_TIME_NO_SEE)
+
+
+def send_message(user_id, text):
+    line_bot_api.push_message(
+        user_id, TextSendMessage(text=msg))
 
 
 if __name__ == '__main__':
