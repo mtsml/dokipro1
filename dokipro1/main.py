@@ -1,23 +1,14 @@
 from flask import Flask, request, abort, render_template
 import os
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
 import json
 import datetime
 import random
 import a3rt
 import dynamo
+import line
 
 
 app = Flask(__name__)
-
-
-# LINE Messesaging API
-CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
-CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
-handler = WebhookHandler(CHANNEL_SECRET)
 
 
 # love point
@@ -77,9 +68,7 @@ def handle_message(event):
     # 返答メッセージを取得する
     reply = a3rt.get_reply_message(event.message.text)
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply))
+    line.reply_message(user_id, reply)
 
 
 @handler.add(FollowEvent)
@@ -100,10 +89,7 @@ def handle_follow_event(event):
     dynamo.set_user_info(items)
 
     # メッセージの送信
-    line_bot_api.reply_message(
-        reply_token=reply_token,
-        messages=TextSendMessage(text=text)
-    )
+    line.reply_message(user_id, text)
 
 
 @handler.add(UnfollowEvent)
