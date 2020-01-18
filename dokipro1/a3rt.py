@@ -1,5 +1,5 @@
 import pya3rt
-
+import os
 
 # A3RT
 A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
@@ -15,5 +15,5 @@ def get_reply_message(text):
         return MESSAGE_REPLY_DEFAULT
     
     reply = res['results'][0]['reply']
-    
+
     return reply
