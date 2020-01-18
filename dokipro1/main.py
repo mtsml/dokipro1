@@ -8,11 +8,9 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
 import a3rt
 import dynamo
-import line
 
 
 app = Flask(__name__)
-handler = line.handler
 
 
 # love point
