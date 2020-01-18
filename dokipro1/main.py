@@ -77,7 +77,7 @@ def handle_message(event):
     # 返答メッセージを取得する
     reply = a3rt.get_reply_message(event.message.text)
 
-    reply_message(user_id, reply)
+    reply_message(event.reply_token, reply)
 
 
 @handler.add(FollowEvent)
@@ -98,7 +98,7 @@ def handle_follow_event(event):
     dynamo.set_user_info(items)
 
     # メッセージの送信
-    reply_message(user_id, text)
+    reply_message(event.reply_token, text)
 
 
 @handler.add(UnfollowEvent)
