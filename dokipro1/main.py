@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import random
 from flask import Flask, request, abort, render_template
 from linebot.models import FollowEvent, MessageEvent, TextMessage, UnfollowEvent
