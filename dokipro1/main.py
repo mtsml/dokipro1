@@ -1,7 +1,8 @@
-from flask import Flask, request, abort, render_template
-import json
 import datetime
+import json
 import random
+from flask import Flask, request, abort, render_template
+from linebot.models import FollowEvent, MessageEvent, TextMessage, UnfollowEvent
 import a3rt
 import dynamo
 import line
@@ -9,6 +10,7 @@ import line
 
 app = Flask(__name__)
 handler = line.handler
+
 
 # love point
 LOVE_POINT_DEFAULT = 0
