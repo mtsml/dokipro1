@@ -1,7 +1,7 @@
 import os
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
+from linebot.models import TextSendMessage
 
 # LINE Messesaging API
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
