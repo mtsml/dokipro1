@@ -1,5 +1,4 @@
 from flask import Flask, request, abort, render_template
-import os
 import json
 import datetime
 import random
