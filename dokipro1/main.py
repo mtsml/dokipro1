@@ -8,7 +8,7 @@ import line
 
 
 app = Flask(__name__)
-
+handler = line.handler
 
 # love point
 LOVE_POINT_DEFAULT = 0
