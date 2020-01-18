@@ -6,8 +6,9 @@ from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessa
 import json
 import datetime
 import random
-import pya3rt
+import a3rt
 import dynamo
+
 
 app = Flask(__name__)
 
@@ -17,10 +18,6 @@ CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
 CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
 handler = WebhookHandler(CHANNEL_SECRET)
-
-
-# A3RT
-A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
 
 
 # love point
@@ -78,7 +75,7 @@ def handle_message(event):
     dynamo.upd_user_info(key, point, timestamp)
 
     # 返答メッセージを取得する
-    reply = get_reply_message(event.message.text)
+    reply = a3rt.get_reply_message(event.message.text)
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -119,20 +116,6 @@ def handle_unfollow_event(event):
 
     # ユーザー情報をDBから削除
     dynamo.del_user_info(key)
-
-
-def get_reply_message(text):
-    client = pya3rt.TalkClient(A3RT_TALK_API_KEY)
-    res = client.talk(text)
-    print(res)
-
-    # 正常終了以外はデフォルトメッセージを返却する
-    if res['status'] != 0:
-        return MESSAGE_REPLY_DEFAULT
-    
-    reply = res['results'][0]['reply']
-    print(reply)
-    return reply
 
 
 if __name__ == "__main__":
