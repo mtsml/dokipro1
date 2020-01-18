@@ -4,7 +4,7 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import dynamo
-import linebot
+import line
 
 
 # めざまし占い
