@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
