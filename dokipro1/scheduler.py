@@ -12,11 +12,14 @@ import dynamo
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
 
+
 # めざまし占い
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 
+
 # メッセージ
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
+
 
 # 設定時間
 CONFIG_LONG_TIME_NO_SEE = 200000
@@ -28,8 +31,6 @@ def main():
     for item in items:
         fortune_today(item)
         remember_me(item)
-
-    return
 
 
 def fortune_today(item):
