@@ -27,7 +27,6 @@ handler = WebhookHandler(CHANNEL_SECRET)
 
 # Template Messages
 MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
-MESSAGE_REPLY_DEFAULT = '認識できませんでした'
 
 
 @app.route("/callback", methods=['POST'])
