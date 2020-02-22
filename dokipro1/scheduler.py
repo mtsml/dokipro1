@@ -19,6 +19,10 @@ URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 
 # メッセージ
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
+MESSAGE_ADVICE_RANK1 = '最高の１日になりそうですね！'
+# MESSAGE_ADVICE_RANK12 = '私がいるから占いの結果なんて気にしないでください'
+MESSAGE_ADVICE_RANK11 = 'F2と間違えてF1を押さないように気をつけましょう'
+MESSAGE_ADVICE_RANK12 = 'ファイルのバックアップはこまめにとりましょう。。'
 
 
 # 設定時間
@@ -40,24 +44,34 @@ def fortune_today(item):
     seiza = item['seiza']
 
     info = get_rank_info(rank_list, seiza)
+    rank = info.a.div.find_all('span')[0].get_text()
 
-    text = 'おはようございます。\n'
-    text += seiza + 'の今日の運勢は' + info.a.div.find_all('span')[0].get_text() + 'です。\n\n'
+    text_fortune = 'おはようございます。\n'
+    text_fortune += seiza + 'の今日の運勢は' + rank + 'です。\n\n'
 
     for t in info.section.div.p.get_text(',').split(','):
-        text += t + '\n'
+        text_fortune += t + '\n'
 
     # 見やすくするため一行開ける
-    text += '\n'
+    text_fortune += '\n'
 
     for t in info.section.div.table.get_text(',').split(','):
         if t == '\n' : continue
-        text += t + '\n'
+        text_fortune += t + '\n'
     
     print('FORTUNE!')
     print('name: ', item['display_name'])
-    print('message: ', text)
-    send_message(item['user_id'], text)
+    send_message(item['user_id'], text_fortune)
+    
+    if rank == '1位':
+        print('message: ', MESSAGE_ADVICE_RANK1)
+        send_message(item['user_id'], MESSAGE_ADVICE_RANK1)
+    elif rank == '11位':
+        print('message: ', MESSAGE_ADVICE_RANK11)
+        send_message(item['user_id'], MESSAGE_ADVICE_RANK11)
+    elif rank == '12位':
+        print('message: ', MESSAGE_ADVICE_RANK12)
+        send_message(item['user_id'], MESSAGE_ADVICE_RANK12)
 
 
 def get_rank_info(rank_list, seiza):
