@@ -20,8 +20,6 @@ URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 # メッセージ
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
 MESSAGE_ADVICE_RANK1 = '最高の１日になりそうですね！'
-# MESSAGE_ADVICE_RANK12 = '私がいるから占いの結果なんて気にしないでください'
-MESSAGE_ADVICE_RANK11 = 'F2と間違えてF1を押さないように気をつけましょう'
 MESSAGE_ADVICE_RANK12 = 'ファイルのバックアップはこまめにとりましょう。。'
 
 
