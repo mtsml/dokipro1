@@ -64,9 +64,6 @@ def fortune_today(item):
     if rank == '1位':
         print('message: ', MESSAGE_ADVICE_RANK1)
         send_message(item['user_id'], MESSAGE_ADVICE_RANK1)
-    elif rank == '11位':
-        print('message: ', MESSAGE_ADVICE_RANK11)
-        send_message(item['user_id'], MESSAGE_ADVICE_RANK11)
     elif rank == '12位':
         print('message: ', MESSAGE_ADVICE_RANK12)
         send_message(item['user_id'], MESSAGE_ADVICE_RANK12)
