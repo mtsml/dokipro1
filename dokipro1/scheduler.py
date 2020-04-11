@@ -19,8 +19,6 @@ URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 
 # メッセージ
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
-MESSAGE_ADVICE_RANK1 = '最高の１日になりそうですね！'
-MESSAGE_ADVICE_RANK12 = 'ファイルのバックアップはこまめにとりましょう。。'
 
 
 # 設定時間
@@ -61,13 +59,6 @@ def fortune_today(item):
     print('name: ', item['display_name'])
     send_message(item['user_id'], text_fortune)
     
-    if rank == '1位':
-        print('message: ', MESSAGE_ADVICE_RANK1)
-        send_message(item['user_id'], MESSAGE_ADVICE_RANK1)
-    elif rank == '12位':
-        print('message: ', MESSAGE_ADVICE_RANK12)
-        send_message(item['user_id'], MESSAGE_ADVICE_RANK12)
-
 
 def get_rank_info(rank_list, seiza):
     for rank in rank_list:
