@@ -13,8 +13,9 @@ CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
 
 
-# めざまし占い
+# URL
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
+URL_HATENA_TECH_NEWS = 'https://b.hatena.ne.jp/hotentry/it'
 
 
 # メッセージ
@@ -30,6 +31,7 @@ def main():
 
     for item in items:
         fortune_today(item)
+        tech_news(item)
         remember_me(item)
 
 
@@ -73,8 +75,19 @@ def remember_me(item):
     if diff > CONFIG_LONG_TIME_NO_SEE:
         print('LONG TIME NO SEE!')
         print('name: ', item['display_name'])
-        print('message: ', MESSAGE_LONG_TIME_NO_SEE)
         send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
+
+
+def tech_news(item):
+    res = requests.get(URL_HATENA_TECH_NEWS)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    url = soup.find('h3', class_='entrylist-contents-title').a.get('href')
+
+    message = '本日のテクノロジーニュースです\n\n' + url
+
+    print('TECH NEWS!')
+    print('name', item['display_name'])
+    send_message(item['user_id'], message)
 
 
 def send_message(user_id, text):
