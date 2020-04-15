@@ -81,13 +81,22 @@ def remember_me(item):
 def tech_news(item):
     res = requests.get(URL_HATENA_TECH_NEWS)
     soup = BeautifulSoup(res.text, 'html.parser')
-    url = soup.find('h3', class_='entrylist-contents-title').a.get('href')
 
-    message = '本日のテクノロジーニュースです\n\n' + url
+    message = '本日のテクノロジーニュースです\n\n'
+    message += get_teck_news_message(soup, 1) + '\n\n'
+    message += get_teck_news_message(soup, 2) + '\n\n'
+    message += get_teck_news_message(soup, 3)
 
     print('TECH NEWS!')
     print('name', item['display_name'])
     send_message(item['user_id'], message)
+
+
+def get_teck_news_message(soup, index):
+    a = soup.find_all('h3', class_='entrylist-contents-title')[index].a
+    url = a.get('href')
+    title = a.get_text()
+    return title + '\n' + url
 
 
 def send_message(user_id, text):
