@@ -97,7 +97,7 @@ def handle_follow_event(event):
     dynamo.set_user_info(items)
 
     # メッセージの送信
-    reply_message(event.reply_token, text)
+    reply_message(reply_token, text)
 
 
 @handler.add(UnfollowEvent)
