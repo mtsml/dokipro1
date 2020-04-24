@@ -6,7 +6,7 @@ import logging
 from flask import Flask, request, abort, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent
+from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent, TemplateSendMessage, MessageAction, ConfirmTemplate, PostbackAction, PostbackEvent
 import a3rt
 import dynamo
 
@@ -26,9 +26,12 @@ handler = WebhookHandler(CHANNEL_SECRET)
 
 
 # Template Messages
-MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
+MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。\nニックネームを教えて下さい。'
+MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
+MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
 
 
+# なぜかエラーになる
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -76,7 +79,8 @@ def handle_message(event):
     # 返答メッセージを取得する
     reply = a3rt.get_reply_message(event.message.text)
 
-    reply_message(event.reply_token, reply)
+    # メッセージの送信
+    reply(event.reply_token, reply)
 
 
 @handler.add(FollowEvent)
@@ -85,7 +89,6 @@ def handle_follow_event(event):
     user_id = event.source.user_id
     profiles = line_bot_api.get_profile(user_id=user_id)
     display_name = profiles.display_name
-    text = MESSAGE_AFTER_FOLLOW.format(display_name)
 
     items = {
         'user_id': user_id,
@@ -97,7 +100,7 @@ def handle_follow_event(event):
     dynamo.set_user_info(items)
 
     # メッセージの送信
-    reply_message(event.reply_token, text)
+    reply(reply_token, MESSAGE_AFTER_FOLLOW)
 
 
 @handler.add(UnfollowEvent)
@@ -112,11 +115,52 @@ def handle_unfollow_event(event):
     dynamo.del_user_info(key)
 
 
-def reply_message(reply_token, text):
+@handler.add(PostbackEvent)
+def handle_postback_event(event):
+    user_id = event.source.user_id
+    data = eval(event.postback.data)
+
+    if data.action=='yes':
+        postback_yes_action(user_id, data.name)
+    else:
+        postbak_no_action(user_id)
+
+
+def postback_yes_action(user_id, name):
+    key = {
+        'user_id': user_id
+    }
+    dynamo.upd_display_name(key, name)
+
+    line_bot_api.push_message(
+        user_id,
+        MESSAGE_POSTBACK_YES
+    )
+
+
+def postbak_no_action(user_id):
+    line_bot_api.push_message(
+        user_id,
+        MESSAGE_POSTBACK_NO
+    )
+
+
+def reply(reply_token, text):
     line_bot_api.reply_message(
         reply_token=reply_token,
         messages=TextSendMessage(text=text)
     )
+
+
+def confirm(user_id, alt_text, text, actions):
+    text_message = TemplateSendMessage(
+        alt_text=alt_text,
+        template=ConfirmTemplate(
+            text=text,
+            actions=actions
+        )
+    )
+    line_bot_api.push_message(user_id, text_message)
 
 
 if __name__ == "__main__":

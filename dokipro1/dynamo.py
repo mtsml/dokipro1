@@ -66,6 +66,23 @@ def upd_user_info(key, point, timestamp):
         print('Successed: ', key['user_id'])
 
 
+def upd_display_name(key, display_name):
+    table = conn_dynamodb(AWS_DYNAMO_TABLE_NM)
+
+    response = table.update_item(
+        Key=key,
+        UpdateExpression="set display_name = :d",
+        ExpressionAttributeValues={ 
+            ':c': display_name
+        }
+    )
+
+    if response['ResponseMetadata']['HTTPStatusCode'] != 200:
+        print('Error: ', response)
+    else:
+        print('Successed: ', key['user_id'])
+
+
 def get_user_info_all():
     table = conn_dynamodb(AWS_DYNAMO_TABLE_NM)
 
