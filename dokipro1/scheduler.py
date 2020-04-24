@@ -120,5 +120,4 @@ def send_message(user_id, text):
 
 
 if __name__ == '__main__':
-    # main()
-    print(covid19_info(None))
+    main()
