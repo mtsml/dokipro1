@@ -7,6 +7,8 @@ from flask import Flask, request, abort, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent, TemplateSendMessage, MessageAction, ConfirmTemplate, PostbackAction, PostbackEvent
+from bs4 import BeautifulSoup
+import requests
 import a3rt
 import dynamo
 
@@ -29,6 +31,10 @@ handler = WebhookHandler(CHANNEL_SECRET)
 MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
 MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
 MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
+
+
+# URL
+URL_COVID19_TOKYO = 'https://stopcovid19.metro.tokyo.lg.jp/'
 
 
 # なぜかエラーになる
@@ -76,8 +82,12 @@ def handle_message(event):
     # ユーザー情報更新
     dynamo.upd_user_info(key, point, timestamp)
 
-    # 返答メッセージを取得する
-    message = a3rt.get_reply_message(event.message.text)
+    # COVID19対応
+    if event.message.text == 'コロナ':
+        message = covid19_info()
+    else:
+        # 返答メッセージを取得する
+        message = a3rt.get_reply_message(event.message.text)
 
     # メッセージの送信
     reply(event.reply_token, message)
@@ -162,6 +172,18 @@ def confirm(user_id, alt_text, text, actions):
         )
     )
     line_bot_api.push_message(user_id, text_message)
+
+
+def covid19_info():
+    res = requests.get(URL_COVID19_TOKYO)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    message = '現在の東京都のコロナ陽性患者数は'
+    message += soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
+    message += '人です。\n'
+    message += soup.find(class_='DataView-DataInfo-date').get_text()
+
+    return message
 
 
 if __name__ == "__main__":

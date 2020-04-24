@@ -16,7 +16,7 @@ line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 # URL
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 URL_HATENA_TECH_NEWS = 'https://b.hatena.ne.jp/hotentry/it'
-
+URL_COVID19_TOKYO = 'https://stopcovid19.metro.tokyo.lg.jp/'
 
 # メッセージ
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
@@ -32,6 +32,7 @@ def main():
     for item in items:
         fortune_today(item)
         tech_news(item)
+        covid19_info(item)
         remember_me(item)
 
 
@@ -97,6 +98,20 @@ def get_teck_news_message(soup, index):
     url = a.get('href')
     title = a.get_text()
     return title + '\n' + url
+
+
+def covid19_info(item):
+    res = requests.get(URL_COVID19_TOKYO)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    message = '昨日の東京都のコロナ陽性患者数は'
+    message += soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
+    message += '人でした。\n'
+    message += soup.find(class_='DataView-DataInfo-date').get_text()
+
+    print('COVID19')
+    print('name', item['display_name'])
+    send_message(item['user_id'], message)
 
 
 def send_message(user_id, text):
