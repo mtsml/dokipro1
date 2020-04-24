@@ -77,10 +77,10 @@ def handle_message(event):
     dynamo.upd_user_info(key, point, timestamp)
 
     # 返答メッセージを取得する
-    reply = a3rt.get_reply_message(event.message.text)
+    message = a3rt.get_reply_message(event.message.text)
 
     # メッセージの送信
-    reply(event.reply_token, reply)
+    reply(event.reply_token, message)
 
 
 @handler.add(FollowEvent)
