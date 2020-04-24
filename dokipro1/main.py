@@ -26,7 +26,7 @@ handler = WebhookHandler(CHANNEL_SECRET)
 
 
 # Template Messages
-MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。\nニックネームを教えて下さい。'
+MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
 MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
 MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
 
@@ -93,7 +93,8 @@ def handle_follow_event(event):
     items = {
         'user_id': user_id,
         'display_name': display_name,
-        'love_point': LOVE_POINT_DEFAULT
+        'love_point': LOVE_POINT_DEFAULT,
+        'message_count': 0
     }
 
     # ユーザー情報をDBに保存
