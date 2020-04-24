@@ -29,6 +29,7 @@ handler = WebhookHandler(CHANNEL_SECRET)
 MESSAGE_AFTER_FOLLOW = 'これからよろしくお願いします、{0}先輩。'
 
 
+# なぜかエラーになる
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
