@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import random
+import logging
 from flask import Flask, request, abort, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -11,7 +12,6 @@ import dynamo
 
 
 app = Flask(__name__)
-
 
 # love point
 LOVE_POINT_DEFAULT = 0
@@ -36,7 +36,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger().info("Request body: " + body)
+    # app.logger.info("Request body: " + body)
 
     # handle webhook body
     try:
