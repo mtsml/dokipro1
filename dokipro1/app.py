@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from router import router
+from router import router, handler
 
 app = Flask(__name__)
 app.register_blueprint(router)
