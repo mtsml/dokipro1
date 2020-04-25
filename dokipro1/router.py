@@ -3,7 +3,7 @@ import json
 import os
 import random
 import logging
-from flask import Flask, request, abort, render_template
+from flask import Blueprint, request, abort, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent, TemplateSendMessage, MessageAction, ConfirmTemplate, PostbackAction, PostbackEvent
@@ -11,53 +11,17 @@ from bs4 import BeautifulSoup
 import requests
 import a3rt
 import dynamo
+import const
 
 
-app = Flask(__name__)
-
-# love point
-LOVE_POINT_DEFAULT = 0
-LOVE_POINT_OF_MESSAGE = 1
-
+router = Blueprint('router', __name__)
 
 # LINE Messesaging API
-CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
-CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
-handler = WebhookHandler(CHANNEL_SECRET)
+line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN) 
+handler = WebhookHandler(const.CHANNEL_SECRET)
 
 
-# Template Messages
-MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
-MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
-MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
-
-
-# URL
-URL_COVID19_TOKYO = 'https://stopcovid19.metro.tokyo.lg.jp/'
-
-
-# なぜかエラーになる
-@app.route("/callback", methods=['POST'])
-def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
-
-    # get request body as text
-    body = request.get_data(as_text=True)
-    # app.logger.info("Request body: " + body)
-
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        print("Invalid signature. Please check your channel access token/channel secret.")
-        abort(400)
-
-    return 'OK'
-
-
-@app.route("/index.html")
+@router.route("/index.html")
 def index():
     items = dynamo.get_user_info_all()
     return render_template("index.html", items=items)
@@ -77,7 +41,7 @@ def handle_message(event):
         'user_id': user_id
     }
 
-    point = LOVE_POINT_OF_MESSAGE + random.randrange(10)
+    point = const.LOVE_POINT_OF_MESSAGE + random.randrange(10)
 
     # ユーザー情報更新
     dynamo.upd_user_info(key, point, timestamp)
@@ -103,7 +67,7 @@ def handle_follow_event(event):
     items = {
         'user_id': user_id,
         'display_name': display_name,
-        'love_point': LOVE_POINT_DEFAULT,
+        'love_point': const.LOVE_POINT_DEFAULT,
         'message_count': 0
     }
 
@@ -111,7 +75,7 @@ def handle_follow_event(event):
     dynamo.set_user_info(items)
 
     # メッセージの送信
-    reply(reply_token, MESSAGE_AFTER_FOLLOW)
+    reply(reply_token, const.MESSAGE_AFTER_FOLLOW)
 
 
 @handler.add(UnfollowEvent)
@@ -145,14 +109,14 @@ def postback_yes_action(user_id, name):
 
     line_bot_api.push_message(
         user_id,
-        MESSAGE_POSTBACK_YES
+        const.MESSAGE_POSTBACK_YES
     )
 
 
 def postbak_no_action(user_id):
     line_bot_api.push_message(
         user_id,
-        MESSAGE_POSTBACK_NO
+        const.MESSAGE_POSTBACK_NO
     )
 
 
@@ -175,7 +139,7 @@ def confirm(user_id, alt_text, text, actions):
 
 
 def covid19_info():
-    res = requests.get(URL_COVID19_TOKYO)
+    res = requests.get(const.URL_COVID19_TOKYO)
     soup = BeautifulSoup(res.text, 'html.parser')
 
     message = '現在の東京都のコロナ陽性患者数は'
@@ -184,8 +148,3 @@ def covid19_info():
     message += soup.find(class_='DataView-DataInfo-date').get_text()
 
     return message
-
-
-if __name__ == "__main__":
-    port = int(os.environ["PORT"])
-    app.run(host="0.0.0.0", port=port)

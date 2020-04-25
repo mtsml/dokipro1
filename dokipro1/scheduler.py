@@ -6,24 +6,11 @@ from linebot import LineBotApi
 from linebot.models import TextSendMessage
 import requests
 import dynamo
+import const
 
 
 # LINE Messesaging API
-CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN) 
-
-
-# URL
-URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
-URL_HATENA_TECH_NEWS = 'https://b.hatena.ne.jp/hotentry/it'
-URL_COVID19_TOKYO = 'https://stopcovid19.metro.tokyo.lg.jp/'
-
-# メッセージ
-MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
-
-
-# 設定時間
-CONFIG_LONG_TIME_NO_SEE = 200000
+line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN) 
 
 
 def main():
@@ -37,7 +24,7 @@ def main():
 
 
 def fortune_today(item):
-    res = requests.get(URL_MEZAMASHI_URANAI)
+    res = requests.get(const.URL_MEZAMASHI_URANAI)
     soup = BeautifulSoup(res.text, 'html.parser')
     rank_list = soup.find_all('div', class_='rankArea')
     seiza = item['seiza']
@@ -73,14 +60,14 @@ def remember_me(item):
     ut = time.time()
 
     diff = int(ut)-int(item['last_datetime']/1000)
-    if diff > CONFIG_LONG_TIME_NO_SEE:
+    if diff > const.CONFIG_LONG_TIME_NO_SEE:
         print('LONG TIME NO SEE!')
         print('name: ', item['display_name'])
-        send_message(item['user_id'], MESSAGE_LONG_TIME_NO_SEE)
+        send_message(item['user_id'], const.MESSAGE_LONG_TIME_NO_SEE)
 
 
 def tech_news(item):
-    res = requests.get(URL_HATENA_TECH_NEWS)
+    res = requests.get(const.URL_HATENA_TECH_NEWS)
     soup = BeautifulSoup(res.text, 'html.parser')
 
     message = '本日のテクノロジーニュースです\n\n'
@@ -101,7 +88,7 @@ def get_teck_news_message(soup, index):
 
 
 def covid19_info(item):
-    res = requests.get(URL_COVID19_TOKYO)
+    res = requests.get(const.URL_COVID19_TOKYO)
     soup = BeautifulSoup(res.text, 'html.parser')
 
     message = '昨日の東京都のコロナ陽性患者数は'
