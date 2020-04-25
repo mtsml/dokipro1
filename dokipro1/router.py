@@ -13,7 +13,7 @@ import a3rt
 import dynamo
 import const
 
-
+print("start")
 router = Blueprint('router', __name__)
 
 # LINE Messesaging API
@@ -148,3 +148,5 @@ def covid19_info():
     message += soup.find(class_='DataView-DataInfo-date').get_text()
 
     return message
+
+print("end")
