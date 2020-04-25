@@ -1,9 +1,9 @@
 import os
 from flask import Flask
-from router import router, handler
+import router
 
 app = Flask(__name__)
-app.register_blueprint(router)
+app.register_blueprint(router.router)
 
 
 if __name__ == "__main__":
