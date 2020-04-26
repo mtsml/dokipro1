@@ -43,6 +43,7 @@ def index():
 def handle_message(event):
     user_id = event.source.user_id
     timestamp = event.timestamp
+    text = event.message.text
     print('user_id: ', user_id)
     print('message: ', event.message.text)
 
@@ -52,11 +53,10 @@ def handle_message(event):
     point = const.LOVE_POINT_OF_MESSAGE + random.randrange(10)
     dynamo.upd_user_info(key, point, timestamp)
 
-    # COVID19対応
-    if event.message.text == const.COVID19:
-        message = util.get_covid19_info(const.TODAY)
-    else:
-        message = a3rt.get_reply_message(event.message.text)
+    message= None
+    if text == const.COVID19: message = util.get_covid19_info(const.TODAY)
+    elif text == const.NEWS:  message = util.get_tech_news(3)
+    else:                     message = a3rt.get_reply_message(text)
 
     util.reply(event.reply_token, message)
 
