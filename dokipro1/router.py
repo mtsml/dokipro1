@@ -1,4 +1,5 @@
 import random
+
 from flask import Blueprint, request, abort, render_template
 from linebot import WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -7,11 +8,12 @@ from linebot.models import (
     MessageEvent, 
     TextMessage, 
     UnfollowEvent
-)    
-import a3rt
-import dynamo
-import const
-import util
+)
+   
+import dokipro1.a3rt as a3rt
+import dokipro1.const as const
+import dokipro1.dynamo as dynamo
+import dokipro1.util as util
 
 
 router = Blueprint('router', __name__)

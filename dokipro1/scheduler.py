@@ -1,14 +1,16 @@
 import json
 import os
-import time
 import sys
+import time
+
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
 import requests
-import dynamo
-import const
-import util
+
+import dokipro1.dynamo as dynamo
+import dokipro1.const as const
+import dokipro1.util as util
 
 
 def main():

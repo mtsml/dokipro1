@@ -1,6 +1,6 @@
 import os
 import boto3
-import const
+import dokipro1.const as const
 
 
 def conn_dynamodb(table_nm):
