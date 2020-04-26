@@ -66,7 +66,7 @@ def handle_message(event):
     dynamo.upd_user_info(key, point, timestamp)
 
     # COVID19対応
-    if event.message.text == 'コロナ':
+    if event.message.text == const.COVID19:
         message = covid19_info()
     else:
         # 返答メッセージを取得する
@@ -161,9 +161,8 @@ def covid19_info():
     res = requests.get(const.URL_COVID19_TOKYO)
     soup = BeautifulSoup(res.text, 'html.parser')
 
-    message = '現在の東京都のコロナ陽性患者数は'
-    message += soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
-    message += '人です。\n'
-    message += soup.find(class_='DataView-DataInfo-date').get_text()
+    today = soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
+    yesterday = soup.find(class_='DataView-DataInfo-date').get_text()
+    message = const.MESSAGE_COVID19.format(today, yesterday)
 
     return message
