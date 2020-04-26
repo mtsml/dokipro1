@@ -109,52 +109,11 @@ def handle_unfollow_event(event):
     dynamo.del_user_info(key)
 
 
-@handler.add(PostbackEvent)
-def handle_postback_event(event):
-    user_id = event.source.user_id
-    data = eval(event.postback.data)
-
-    if data.action=='yes':
-        postback_yes_action(user_id, data.name)
-    else:
-        postbak_no_action(user_id)
-
-
-def postback_yes_action(user_id, name):
-    key = {
-        'user_id': user_id
-    }
-    dynamo.upd_display_name(key, name)
-
-    line_bot_api.push_message(
-        user_id,
-        const.MESSAGE_POSTBACK_YES
-    )
-
-
-def postbak_no_action(user_id):
-    line_bot_api.push_message(
-        user_id,
-        const.MESSAGE_POSTBACK_NO
-    )
-
-
 def reply(reply_token, text):
     line_bot_api.reply_message(
         reply_token=reply_token,
         messages=TextSendMessage(text=text)
     )
-
-
-def confirm(user_id, alt_text, text, actions):
-    text_message = TemplateSendMessage(
-        alt_text=alt_text,
-        template=ConfirmTemplate(
-            text=text,
-            actions=actions
-        )
-    )
-    line_bot_api.push_message(user_id, text_message)
 
 
 def covid19_info():
