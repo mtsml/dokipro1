@@ -54,7 +54,7 @@ def handle_message(event):
 
     # COVID19対応
     if event.message.text == const.COVID19:
-        message = util.get_covid19_info('現在の')
+        message = util.get_covid19_info(const.TODAY)
     else:
         message = a3rt.get_reply_message(event.message.text)
 
