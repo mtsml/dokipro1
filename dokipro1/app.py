@@ -21,6 +21,25 @@ line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(const.CHANNEL_SECRET)
 
 
+@app.route("/callback", methods=['POST'])
+def callback():
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
+
+    # get request body as text
+    body = request.get_data(as_text=True)
+    # app.logger.info("Request body: " + body)
+
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        print("Invalid signature. Please check your channel access token/channel secret.")
+        abort(400)
+
+    return 'OK'
+
+
 @app.route("/index.html")
 def index():
     items = dynamo.get_user_info_all()
