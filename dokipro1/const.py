@@ -23,7 +23,11 @@ MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
 MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
 MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
+MESSAGE_COVID19 = '現在の東京都のコロナ陽性患者数は{}人です。\n{}'
 
+
+# 定数
+COVID19 = 'コロナ'
 
 # 設定時間
 CONFIG_LONG_TIME_NO_SEE = 200000
