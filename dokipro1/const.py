@@ -23,11 +23,18 @@ MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
 MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
 MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
-MESSAGE_COVID19 = '現在の東京都のコロナ陽性患者数は{}人です。\n{}'
+MESSAGE_COVID19 = '{}の東京都のコロナ陽性患者数は{}人です。\n{}'
+MESSAGE_TECH_NEWS = '本日のテクノロジーニュースです'
+MESSAGE_FORTUNE = 'おはようございます。\n{}の今日の運勢は{}です。\n\n'
 
 
 # 定数
+OK = 'OK'
 COVID19 = 'コロナ'
+TODAY = '本日'
+YESTERDAY = '昨日'
+MODE_INIT = 1
+MODE_EXEC = 2
 
 # 設定時間
 CONFIG_LONG_TIME_NO_SEE = 200000
