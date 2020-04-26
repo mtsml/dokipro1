@@ -1,54 +1,60 @@
 import json
 import os
 import time
+import sys
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
 import requests
 import dynamo
 import const
-
-
-# LINE Messesaging API
-line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN) 
+import util
 
 
 def main():
+    funcs = sys.argv
+    del funcs[0]
     items = dynamo.get_user_info_all()
+    datas = {}
+
+    for func in funcs:
+        init(func, datas)
 
     for item in items:
-        fortune_today(item)
-        tech_news(item)
-        covid19_info(item)
-        remember_me(item)
+        for func in funcs:
+            execute(func, datas[func], item)
 
 
-def fortune_today(item):
-    res = requests.get(const.URL_MEZAMASHI_URANAI)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    rank_list = soup.find_all('div', class_='rankArea')
+def fortune_today(mode, data, item):
+    if mode == const.MODE_INIT:
+        return get_fortune_data()
+    elif mode == const.MODE_EXEC:
+        return get_fortune_message(data, item)
+
+
+def get_fortune_data():
+    soup = util.get_soup_by_url(const.URL_MEZAMASHI_URANAI)
+    fortune_data = soup.find_all('div', class_='rankArea')
+    return fortune_data
+
+
+def get_fortune_message(data, item):
     seiza = item['seiza']
-
-    info = get_rank_info(rank_list, seiza)
+    info = get_rank_info(data, seiza)
     rank = info.a.div.find_all('span')[0].get_text()
-
-    text_fortune = 'おはようございます。\n'
-    text_fortune += seiza + 'の今日の運勢は' + rank + 'です。\n\n'
+    message = const.MESSAGE_FORTUNE.format(seiza, rank)
 
     for t in info.section.div.p.get_text(',').split(','):
-        text_fortune += t + '\n'
+        message += t + '\n'
 
-    # 見やすくするため一行開ける
-    text_fortune += '\n'
+    message += '\n'
 
     for t in info.section.div.table.get_text(',').split(','):
         if t == '\n' : continue
-        text_fortune += t + '\n'
-    
-    print('FORTUNE!')
-    print('name: ', item['display_name'])
-    send_message(item['user_id'], text_fortune)
-    
+        message += t + '\n'
+
+    return message
+
 
 def get_rank_info(rank_list, seiza):
     for rank in rank_list:
@@ -56,54 +62,46 @@ def get_rank_info(rank_list, seiza):
             return rank
 
 
-def remember_me(item):
-    ut = time.time()
-
-    diff = int(ut)-int(item['last_datetime']/1000)
-    if diff > const.CONFIG_LONG_TIME_NO_SEE:
-        print('LONG TIME NO SEE!')
-        print('name: ', item['display_name'])
-        send_message(item['user_id'], const.MESSAGE_LONG_TIME_NO_SEE)
+def tech_news(mode, data, item):
+    if mode == const.MODE_INIT:
+        return util.get_tech_news(3)
+    elif mode == const.MODE_EXEC:
+        return data
 
 
-def tech_news(item):
-    res = requests.get(const.URL_HATENA_TECH_NEWS)
-    soup = BeautifulSoup(res.text, 'html.parser')
-
-    message = '本日のテクノロジーニュースです\n\n'
-    message += get_teck_news_message(soup, 1) + '\n\n'
-    message += get_teck_news_message(soup, 2) + '\n\n'
-    message += get_teck_news_message(soup, 3)
-
-    print('TECH NEWS!')
-    print('name', item['display_name'])
-    send_message(item['user_id'], message)
+def covid19_info(mode, data, item):
+    if mode == const.MODE_INIT:
+        return util.get_covid19_info(const.YESTERDAY)
+    elif mode == const.MODE_EXEC:
+        return data
 
 
-def get_teck_news_message(soup, index):
-    a = soup.find_all('h3', class_='entrylist-contents-title')[index].a
-    url = a.get('href')
-    title = a.get_text()
-    return title + '\n' + url
+def remember_me(mode, data, item):
+    if mode == const.MODE_INIT:
+        return None
+    elif mode == const.MODE_EXEC:
+        message = None
+        ut = time.time()
+        diff = int(ut)-int(item['last_datetime']/1000)
+
+        if diff > const.CONFIG_LONG_TIME_NO_SEE:
+            message = const.MESSAGE_LONG_TIME_NO_SEE
+        
+        return message
 
 
-def covid19_info(item):
-    res = requests.get(const.URL_COVID19_TOKYO)
-    soup = BeautifulSoup(res.text, 'html.parser')
-
-    message = '昨日の東京都のコロナ陽性患者数は'
-    message += soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
-    message += '人でした。\n'
-    message += soup.find(class_='DataView-DataInfo-date').get_text()
-
-    print('COVID19')
-    print('name', item['display_name'])
-    send_message(item['user_id'], message)
+def init(func, datas):
+    data = eval(func)(const.MODE_INIT, None, None)
+    datas[func] = data
 
 
-def send_message(user_id, text):
-    line_bot_api.push_message(
-        user_id, TextSendMessage(text=text))
+def execute(func, data, item):
+    message = eval(func)(const.MODE_EXEC, data, item)
+
+    if message != None:
+        print(func)
+        print('name', item['display_name'])
+        util.send_message(item['user_id'], message)
 
 
 if __name__ == '__main__':
