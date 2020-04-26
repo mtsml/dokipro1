@@ -3,7 +3,7 @@ import json
 import os
 import random
 import logging
-from flask import Blueprint, request, abort, render_template
+from flask import Flask, request, abort, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import FollowEvent, MessageEvent, TextMessage, TextSendMessage, UnfollowEvent, TemplateSendMessage, MessageAction, ConfirmTemplate, PostbackAction, PostbackEvent
@@ -14,14 +14,14 @@ import dynamo
 import const
 
 
-router = Blueprint('router', __name__)
+app = Flask(__name__)
 
 # LINE Messesaging API
 line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN) 
 handler = WebhookHandler(const.CHANNEL_SECRET)
 
 
-@router.route("/index.html")
+@app.route("/index.html")
 def index():
     items = dynamo.get_user_info_all()
     return render_template("index.html", items=items)
@@ -148,3 +148,7 @@ def covid19_info():
     message += soup.find(class_='DataView-DataInfo-date').get_text()
 
     return message
+
+if __name__ == "__main__":
+    port = int(os.environ["PORT"])
+    app.run(host="0.0.0.0", port=port)
