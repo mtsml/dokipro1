@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from router import router
+from dokipro1.router import router
 
 
 app = Flask(__name__)

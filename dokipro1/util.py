@@ -1,10 +1,9 @@
-import requests
+from bs4 import BeautifulSoup
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
-from bs4 import BeautifulSoup
-import a3rt
-import dynamo
-import const
+import requests
+
+import dokipro1.const as const
 
 
 # LINE Messesaging API
