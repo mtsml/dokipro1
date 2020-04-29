@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from bs4 import BeautifulSoup
+import xmlrunner
 
 import dokipro1.const as const
 import dokipro1.util as util
@@ -45,9 +46,9 @@ class TestUtil(unittest.TestCase):
         </h3>
         '''
         soup = BeautifulSoup(text, "html.parser")
-        expected = 'sample\nhttps://example.com'
+        expected = 'somple\nhttps://example.com'
         self.assertEqual(util.get_tech_news_one(soup, 0), expected)
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output="./test-reports"))
