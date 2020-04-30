@@ -46,7 +46,7 @@ class TestUtil(unittest.TestCase):
         </h3>
         '''
         soup = BeautifulSoup(text, "html.parser")
-        expected = 'sample\nhttps://example.com'
+        expected = 'somple\nhttps://example.com'
         self.assertEqual(util.get_tech_news_one(soup, 0), expected)
 
 
