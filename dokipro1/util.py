@@ -28,11 +28,16 @@ def get_soup_by_url(url):
     return soup
 
 
-def get_covid19_info(day):
-    json = requests.get(const.URL_COVID19_TOKYO)
+def get_covid19_data():
+    res = requests.get(const.URL_COVID19_TOKYO)
+    return res.json()
 
-    today = int(json[-1]["count"])
-    yesterday = int(json[-2]["count"])
+
+def get_covid19_info(day):
+    data = get_covid19_data()["data"]
+
+    today = int(data[-1]["count"])
+    yesterday = int(data[-2]["count"])
     diff = today - yesterday
     if diff >= 0:
         diff = '+' + str(diff)
