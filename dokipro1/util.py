@@ -29,11 +29,14 @@ def get_soup_by_url(url):
 
 
 def get_covid19_info(day):
-    soup = get_soup_by_url(const.URL_COVID19_TOKYO)
+    json = requests.get(const.URL_COVID19_TOKYO)
 
-    today = soup.find(class_='DataView-DataInfo-summary').get_text(',').split(',')[0].strip()
-    yesterday = soup.find(class_='DataView-DataInfo-date').get_text()
-    message = const.MESSAGE_COVID19.format(day, today, yesterday)
+    today = int(json[-1]["count"])
+    yesterday = int(json[-2]["count"])
+    diff = today - yesterday
+    if diff >= 0:
+        diff = '+' + str(diff)
+    message = const.MESSAGE_COVID19.format(day, str(today), str(diff))
 
     return message
 

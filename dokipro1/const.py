@@ -27,7 +27,7 @@ MESSAGE_AFTER_FOLLOW = 'フォローありがとうございます。'
 MESSAGE_POSTBACK_NO = 'ニックネームを教えて下さい。'
 MESSAGE_POSTBACK_YES = '{}さん、これからよろしくお願いします。'
 MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
-MESSAGE_COVID19 = '{}の東京都のコロナ陽性患者数は{}人です。\n{}'
+MESSAGE_COVID19 = '{}の東京都のコロナ陽性患者数は{}人です。\n（前日比: {} 人）'
 MESSAGE_TECH_NEWS = '本日のテクノロジーニュースです'
 MESSAGE_FORTUNE = 'おはようございます。\n{}の今日の運勢は{}です。\n\n'
 MESSAGE_REPLY_DEFAULT = 'ちょっと何言ってるか分からないです'
@@ -47,6 +47,6 @@ CONFIG_LONG_TIME_NO_SEE = 200000
 
 
 # URL
-URL_COVID19_TOKYO = 'https://stopcovid19.metro.tokyo.lg.jp/'
+URL_COVID19_TOKYO = 'https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/daily_positive_detail.json'
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 URL_HATENA_TECH_NEWS = 'https://b.hatena.ne.jp/hotentry/it'
