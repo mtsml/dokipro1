@@ -41,6 +41,8 @@ YESTERDAY = '昨日'
 MODE_INIT = 1
 MODE_EXEC = 2
 NEWS = 'ニュース'
+DERBY = '日本ダービー'
+
 
 # 設定時間
 CONFIG_LONG_TIME_NO_SEE = 200000
