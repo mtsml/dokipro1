@@ -107,6 +107,10 @@ class TestUtil(unittest.TestCase):
         expected = 'sample\nhttps://example.com'
         self.assertEqual(util.get_tech_news_one(soup, 0), expected)
 
+    def test_guess_horse_racing(self):
+        expected = '10 18 11'
+        self.assertEqual(util.guess_horse_racing(202105300511, 18), expected)
+
 
 if __name__ == '__main__':
     unittest.main(testRunner=xmlrunner.XMLTestRunner(output="./test-reports"))
