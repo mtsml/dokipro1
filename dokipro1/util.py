@@ -1,3 +1,5 @@
+import random
+
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
@@ -61,3 +63,31 @@ def get_tech_news_one(soup, index):
     url = a.get('href')
     title = a.get_text()
     return title + '\n' + url
+
+
+def guess_horse_racing(seed, horse_cnt):
+    """
+    競馬を当てる。
+
+    Parameters
+    ----------
+    seed : int
+        疑似乱数に与えるseed。
+        形式：「YYYYMMDD」+「場名コード」+「レース番号」
+        例：2021年の日本ダービーの場合「202105300511」
+    horse_cnt : int
+        出走する馬の頭数。
+
+    Returns
+    -------
+    message : str
+        3着までの馬番。
+        例：「10 18 11」
+    """
+
+    # 同一レースに対して常に同じ結果を返却するためにseedを設定する
+    random.seed(seed)
+    sanrentan = random.sample(range(1, horse_cnt + 1), 3)
+    message = ' '.join(map(str, sanrentan))
+
+    return message
