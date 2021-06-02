@@ -58,7 +58,7 @@ def handle_message(event):
     message= None
     if text == const.COVID19: message = util.get_covid19_info(const.TODAY)
     elif text == const.NEWS:  message = util.get_tech_news(3)
-    elif text == const.DERBY: message = util.guess_horse_racing(202105300511, 18)
+    elif text == const.DERBY: message = util.guess_horse_racing(202105300511, 17)
     elif text == const.GNAVI: message = "ぐるなびのAPIのレスポンスです"
     else:                     message = a3rt.get_reply_message(text)
 
