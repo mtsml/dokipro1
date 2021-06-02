@@ -42,6 +42,7 @@ MODE_INIT = 1
 MODE_EXEC = 2
 NEWS = 'ニュース'
 DERBY = '日本ダービー'
+GNAVI = 'ぐるなび'
 
 
 # 設定時間
