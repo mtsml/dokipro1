@@ -1,1 +1,34 @@
-{"type":"bubble","header":{"type":"box","layout":"vertical","contents":[]},"hero":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"ウキウキ競馬予想","align":"center","size":"xl"}]},"body":{"type":"box","layout":"vertical","contents":[{"type":"button","action":{"type":"postback","data":"202106060511","label":"安田記念"},"style":"primary"},{"type":"button","action":{"type":"postback","label":"宝塚記念","data":"202106270511"},"style":"primary"}],"spacing":"lg"}}
+{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "ウキウキ競馬予想🐎",
+          "size": "xl",
+          "align": "center"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "data": "202106060511",
+            "label": "安田記念"
+          },
+          "style": "primary"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "label": "宝塚記念",
+            "data": "202106270511"
+          },
+          "style": "primary"
+        }
+      ],
+      "spacing": "lg"
+    }
+  }
