@@ -27,7 +27,7 @@ def send_message(user_id, text):
 def reply_flex_message(reply_token, alt_text, contents):
     line_bot_api.reply_message(
         reply_token = reply_token, 
-        message = FlexSendMessage(
+        messages = FlexSendMessage(
             alt_text=alt_text,
             contents=contents
         )
