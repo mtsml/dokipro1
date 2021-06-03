@@ -2,7 +2,7 @@ import random
 
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
-from linebot.models import TextSendMessage
+from linebot.models import TextSendMessage, FlexSendMessage
 import requests
 
 import dokipro1.const as const
@@ -22,6 +22,15 @@ def reply(reply_token, text):
 def send_message(user_id, text):
     line_bot_api.push_message(
         user_id, TextSendMessage(text=text))
+
+
+def send_flex_message(user_id, alt_text, contents):
+    line_bot_api.push_message(
+        user_id, FlexSendMessage(
+            alt_text=alt_text,
+            contents=contents
+        )
+    )
 
 
 def get_soup_by_url(url):

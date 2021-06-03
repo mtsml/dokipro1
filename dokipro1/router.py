@@ -14,6 +14,7 @@ import dokipro1.a3rt as a3rt
 import dokipro1.const as const
 import dokipro1.dynamo as dynamo
 import dokipro1.util as util
+import dokipro1.keiba as keiba
 
 
 router = Blueprint('router', __name__)
@@ -60,6 +61,10 @@ def handle_message(event):
     elif text == const.NEWS:  message = util.get_tech_news(3)
     elif text == const.DERBY: message = util.guess_horse_racing(202105300511, 17)
     elif text == const.GNAVI: message = "ぐるなびのAPIのレスポンスです"
+    elif text == const.KEIBA:
+        message = keiba.get_race_choice_message()
+        util.send_flex_message(user_id, 'Flex Menu', message)
+        return
     else:                     message = a3rt.get_reply_message(text)
 
     util.reply(event.reply_token, message)

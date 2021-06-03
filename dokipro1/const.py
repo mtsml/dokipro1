@@ -43,6 +43,7 @@ MODE_EXEC = 2
 NEWS = 'ニュース'
 DERBY = '日本ダービー'
 GNAVI = 'ぐるなび'
+KEIBA = '競馬'
 
 
 # 設定時間
