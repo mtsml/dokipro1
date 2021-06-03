@@ -63,7 +63,7 @@ def handle_message(event):
     elif text == const.GNAVI: message = "ぐるなびのAPIのレスポンスです"
     elif text == const.KEIBA:
         message = keiba.get_race_choice_message()
-        util.send_flex_message(user_id, 'FlexMenu', message)
+        util.send_flex_message(event.reply_token, 'FlexMenu', message)
         return
     else:                     message = a3rt.get_reply_message(text)
 
