@@ -15,16 +15,7 @@
           "action": {
             "type": "postback",
             "label": "安田記念",
-            "data": "202106060511,14"
-          },
-          "style": "primary"
-        },
-        {
-          "type": "button",
-          "action": {
-            "type": "postback",
-            "label": "宝塚記念",
-            "data": "202106270511,18"
+            "data": "202105030211"
           },
           "style": "primary"
         }
