@@ -84,7 +84,7 @@ def handle_postback_event(event):
 
     race, horse_cnt = map(int, data.split(','))
     message = util.guess_horse_racing(race, horse_cnt)
-    return message
+    util.reply(event.reply_token, message)
 
 
 @handler.add(FollowEvent)
