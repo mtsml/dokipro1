@@ -15,10 +15,7 @@
           "action": {
             "type": "postback",
             "label": "安田記念",
-            "data": {
-              "race": "202106060511",
-              "horse_cnt": "14"
-            }
+            "data": "202106060511,14"
           },
           "style": "primary"
         },
@@ -27,10 +24,7 @@
           "action": {
             "type": "postback",
             "label": "宝塚記念",
-            "data": {
-              "race": "202106270511",
-              "horse_cnt": "18"
-            }
+            "data": "202106270511,18"
           },
           "style": "primary"
         }
