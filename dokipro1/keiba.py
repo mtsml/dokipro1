@@ -41,7 +41,8 @@ def guess_horse_racing(race_id):
 
     # 同一レースに対して常に同じ結果を返却するためにseedを設定する
     random.seed(race_id)
-    sanrentan = random.sample(range(1, len(horse_list) + 1), 3)
+    # horse_listは頭数+1であるためrangeの最大値にサイズをそのまま指定する
+    sanrentan = random.sample(range(1, len(horse_list)), 3)
     message = ' '.join(map(str, sanrentan))
 
     return message
