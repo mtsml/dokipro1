@@ -82,7 +82,7 @@ def handle_postback_event(event):
     print('user_id: ', user_id)
     print('data: ', data)
 
-    race, horse_cnt = data.split(',')
+    race, horse_cnt = map(int, data.split(','))
     message = util.guess_horse_racing(race, horse_cnt)
     return message
 
