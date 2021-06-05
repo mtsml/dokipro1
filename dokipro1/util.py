@@ -73,30 +73,3 @@ def get_tech_news_one(soup, index):
     url = a.get('href')
     title = a.get_text()
     return title + '\n' + url
-
-
-def guess_horse_racing(seed):
-    """
-    競馬を当てる。
-
-    Parameters
-    ----------
-    seed : int
-        疑似乱数に与えるseed。
-        netkeibaのrace_idを使用する。
-
-    Returns
-    -------
-    message : str
-        3着までの馬番。
-        例：「10 18 11」
-    """
-
-    # TODO: スクレイピングするように書き換える
-    horse_cnt = 14
-    # 同一レースに対して常に同じ結果を返却するためにseedを設定する
-    random.seed(seed)
-    sanrentan = random.sample(range(1, horse_cnt + 1), 3)
-    message = ' '.join(map(str, sanrentan))
-
-    return message

@@ -82,7 +82,7 @@ def handle_postback_event(event):
     print('user_id: ', user_id)
     print('data: ', data)
 
-    message = util.guess_horse_racing(int(data))
+    message = keiba.guess_horse_racing(int(data))
     util.reply(event.reply_token, message)
 
 

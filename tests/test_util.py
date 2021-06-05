@@ -7,6 +7,7 @@ from http.client import HTTPResponse
 
 import dokipro1.const as const
 import dokipro1.util as util
+import dokipro1.keiba as keiba
 
 
 class TestUtil(unittest.TestCase):
@@ -106,10 +107,6 @@ class TestUtil(unittest.TestCase):
         soup = BeautifulSoup(text, "html.parser")
         expected = 'sample\nhttps://example.com'
         self.assertEqual(util.get_tech_news_one(soup, 0), expected)
-
-    def test_guess_horse_racing(self):
-        expected = '10 17 6'
-        self.assertEqual(util.guess_horse_racing(202105300511, 17), expected)
 
 
 if __name__ == '__main__':
