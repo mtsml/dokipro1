@@ -7,7 +7,8 @@ from linebot.models import (
     FollowEvent, 
     MessageEvent, 
     TextMessage, 
-    UnfollowEvent
+    UnfollowEvent,
+    PostbackEvent
 )
    
 import dokipro1.a3rt as a3rt
@@ -59,7 +60,6 @@ def handle_message(event):
     message= None
     if text == const.COVID19: message = util.get_covid19_info(const.TODAY)
     elif text == const.NEWS:  message = util.get_tech_news(3)
-    elif text == const.DERBY: message = util.guess_horse_racing(202105300511, 17)
     elif text == const.GNAVI: message = "ぐるなびのAPIのレスポンスです"
     elif text == const.KEIBA:
         message = keiba.get_race_choice_message()
@@ -68,6 +68,20 @@ def handle_message(event):
     else:                     message = a3rt.get_reply_message(text)
 
     util.reply(event.reply_token, message)
+
+
+@handler.add(PostbackEvent)
+def handle_postback_event(event):
+    user_id = event.source.user_id
+    timestamp = event.timestamp
+    data = event.postback.data
+    print('user_id: ', user_id)
+    print('data: ', data)
+
+    race = data.race
+    horse_cnt = data.horse_cnt
+    message = util.guess_horse_racing(race, horse_cnt)
+    return message
 
 
 @handler.add(FollowEvent)
