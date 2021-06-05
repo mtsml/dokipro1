@@ -41,7 +41,6 @@ YESTERDAY = '昨日'
 MODE_INIT = 1
 MODE_EXEC = 2
 NEWS = 'ニュース'
-DERBY = '日本ダービー'
 GNAVI = 'ぐるなび'
 KEIBA = '競馬'
 

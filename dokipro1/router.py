@@ -72,14 +72,17 @@ def handle_message(event):
 
 @handler.add(PostbackEvent)
 def handle_postback_event(event):
+    """
+    ボタン押下などのアクションを処理する
+    """
+
     user_id = event.source.user_id
     timestamp = event.timestamp
     data = event.postback.data
     print('user_id: ', user_id)
     print('data: ', data)
 
-    race = data.race
-    horse_cnt = data.horse_cnt
+    race, horse_cnt = data.split(',')
     message = util.guess_horse_racing(race, horse_cnt)
     return message
 
