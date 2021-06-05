@@ -62,6 +62,6 @@ def get_horse_list_from_soup(soup):
             'horse_name': tr.find('span', class_='HorseName').a.get_text(),
             'jockey': tr.find('td', class_='Jockey').a.get_text()
         }
-        horse_list[int(umaban)](horse_info)
+        horse_list[int(umaban)] = horse_info
 
     return horse_list
