@@ -75,7 +75,7 @@ def get_tech_news_one(soup, index):
     return title + '\n' + url
 
 
-def guess_horse_racing(seed, horse_cnt):
+def guess_horse_racing(seed):
     """
     競馬を当てる。
 
@@ -83,10 +83,7 @@ def guess_horse_racing(seed, horse_cnt):
     ----------
     seed : int
         疑似乱数に与えるseed。
-        形式：「YYYYMMDD」+「場名コード」+「レース番号」
-        例：2021年の日本ダービーの場合「202105300511」
-    horse_cnt : int
-        出走する馬の頭数。
+        netkeibaのrace_idを使用する。
 
     Returns
     -------
@@ -95,6 +92,8 @@ def guess_horse_racing(seed, horse_cnt):
         例：「10 18 11」
     """
 
+    # TODO: スクレイピングするように書き換える
+    horse_cnt = 14
     # 同一レースに対して常に同じ結果を返却するためにseedを設定する
     random.seed(seed)
     sanrentan = random.sample(range(1, horse_cnt + 1), 3)
