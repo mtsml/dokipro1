@@ -35,6 +35,7 @@ def guess_horse_racing(race_id):
     """
 
     res = requests.get(RACE_INFO_URL.format(race_id))
+    res.encoding = 'EUC-JP'
     soup = BeautifulSoup(res.text, 'html.parser')
     horse_list = get_horse_list_from_soup(soup)
     print(horse_list)
