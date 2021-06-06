@@ -1,0 +1,144 @@
+{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "RACE_NAME",
+          "weight": "bold",
+          "size": "xxl",
+          "margin": "md"
+        },
+        {
+          "type": "separator",
+          "margin": "xxl"
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "xxl",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "UMABAN_1",
+                  "size": "xxl",
+                  "color": "#555555",
+                  "flex": 0
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "HORSE_NAME_1",
+                      "size": "lg",
+                      "color": "#111111",
+                      "align": "end"
+                    },
+                    {
+                      "type": "text",
+                      "size": "sm",
+                      "color": "#111111",
+                      "align": "end",
+                      "text": "JOCKEY_1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "separator",
+              "margin": "xxl"
+            },
+            {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "UMABAN_2",
+                    "size": "xxl",
+                    "color": "#555555",
+                    "flex": 0
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "HORSE_NAME_2",
+                        "size": "lg",
+                        "color": "#111111",
+                        "align": "end"
+                      },
+                      {
+                        "type": "text",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "text": "JOCKEY_2"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "separator",
+                "margin": "xxl"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "UMABAN_3",
+                    "size": "xxl",
+                    "color": "#555555",
+                    "flex": 0
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "HORSE_NAME_3",
+                        "size": "lg",
+                        "color": "#111111",
+                        "align": "end"
+                      },
+                      {
+                        "type": "text",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "text": "JOCKEY_3"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "separator",
+                "margin": "xxl"
+              }    
+          ]
+        }
+      ]
+    },
+    "styles": {
+      "footer": {
+        "separator": true
+      }
+    }
+  }

@@ -83,7 +83,7 @@ def handle_postback_event(event):
     print('data: ', data)
 
     message = keiba.guess_horse_racing(int(data))
-    util.reply(event.reply_token, message)
+    util.reply_flex_message(event.reply_token, 'sanrentan', message)
 
 
 @handler.add(FollowEvent)
