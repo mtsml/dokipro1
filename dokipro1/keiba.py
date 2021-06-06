@@ -92,7 +92,7 @@ def build_sanrentan_message(race_name, horse_list, sanrentan):
     data.close()
 
     # レース情報を書き込む
-    template.body.contents[0].text = race_name
+    template['body']['contents'][0]['text'] = race_name
 
     # 馬の情報を書き込む
     for index, umaban in enumerate(sanrentan):
