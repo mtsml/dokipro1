@@ -35,22 +35,33 @@ def guess_horse_racing(race_id):
     """
 
     res = requests.get(RACE_INFO_URL.format(race_id))
+    res.encoding = 'EUC-JP'
     soup = BeautifulSoup(res.text, 'html.parser')
+    race_name = get_race_name_from_soup(soup)
     horse_list = get_horse_list_from_soup(soup)
+    print(race_name)
     print(horse_list)
 
     # 同一レースに対して常に同じ結果を返却するためにseedを設定する
     random.seed(race_id)
     # horse_listは頭数+1であるためrangeの最大値にサイズをそのまま指定する
     sanrentan = random.sample(range(1, len(horse_list)), 3)
-    message = ' '.join(map(str, sanrentan))
+    message = build_sanrentan_message(race_name, horse_list, sanrentan)
 
     return message
 
 
+def get_race_name_from_soup(soup):
+    """
+    出馬表のsoupからレース情報を返却する。
+    """
+    race_name = soup.find('div', class_='RaceName').get_text()
+    return race_name
+
+
 def get_horse_list_from_soup(soup):
     """
-    出馬表のURLから出走する馬のリストを返却する。
+    出馬表のsoupから出走する馬のリストを返却する。
     """
     tr_all = soup.find_all('tr', class_='HorseList')
 
@@ -66,3 +77,28 @@ def get_horse_list_from_soup(soup):
         horse_list[int(umaban)] = horse_info
 
     return horse_list
+
+
+def build_sanrentan_message(race_name, horse_list, sanrentan):
+    """
+    三連単のFlexMessageを作成し返却する
+    """
+
+    # templateを読み込む
+    dirname = os.getcwd()
+    path = os.path.join(dirname, 'dokipro1/assets/sanrentan.json')
+    data = open(path, mode='r')
+    template = json.load(data)
+    data.close()
+
+    # レース情報を書き込む
+    template.body.contents[0].text = race_name
+
+    # 馬の情報を書き込む
+    for index, umaban in enumerate(sanrentan):
+        horse_info = horse_list[umaban]
+        template.body.contents[2].contents[index].contents[0].text = horse_info.umaban
+        template.body.contents[2].contents[index].contents[1].contents[0].text = horse_info.horse_name
+        template.body.contents[2].contents[index].contents[1].contents[1].text = horse_info.jockey
+
+    return template
