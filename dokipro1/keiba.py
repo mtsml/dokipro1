@@ -97,8 +97,8 @@ def build_sanrentan_message(race_name, horse_list, sanrentan):
     # 馬の情報を書き込む
     for index, umaban in enumerate(sanrentan):
         horse_info = horse_list[umaban]
-        template['body']['contents'][2]['contents'][index]['contents'][0]['text'] = horse_info.umaban
-        template['body']['contents'][2]['contents'][index]['contents'][1]['contents'][0]['text'] = horse_info.horse_name
-        template['body']['contents'][2]['contents'][index]['contents'][1]['contents'][1]['text'] = horse_info.jockey
+        template['body']['contents'][2]['contents'][index]['contents'][0]['text'] = horse_info['umaban']
+        template['body']['contents'][2]['contents'][index]['contents'][1]['contents'][0]['text'] = horse_info['horse_name']
+        template['body']['contents'][2]['contents'][index]['contents'][1]['contents'][1]['text'] = horse_info['jockey']
 
     return template
