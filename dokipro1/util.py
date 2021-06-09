@@ -83,8 +83,11 @@ def get_tech_news_one(soup, index):
 
 
 def get_cat_image():
+    res = requests.get(const.URL_CAT_API)
+    json_data = res.json()
+    url = json_data['webpurl']
     image_message = ImageSendMessage(
-        original_content_url='https://i.thatcopy.pw/cat-webp/fa6dPqc.webp',
-        preview_image_url='https://i.thatcopy.pw/cat-webp/fa6dPqc.webp'
+        original_content_url=url,
+        preview_image_url=url
     )
     return image_message
