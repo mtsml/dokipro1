@@ -2,7 +2,7 @@ import random
 
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
-from linebot.models import TextSendMessage, FlexSendMessage
+from linebot.models import TextSendMessage, FlexSendMessage, ImageSendMessage
 import requests
 
 import dokipro1.const as const
@@ -73,3 +73,11 @@ def get_tech_news_one(soup, index):
     url = a.get('href')
     title = a.get_text()
     return title + '\n' + url
+
+
+def get_cat_image():
+    image_message = ImageSendMessage(
+        original_content_url='https://i.thatcopy.pw/cat-webp/fa6dPqc.webp',
+        preview_image_url='https://i.thatcopy.pw/cat-webp/fa6dPqc.webp'
+    )
+    return image_message

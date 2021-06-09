@@ -41,7 +41,7 @@ YESTERDAY = '昨日'
 MODE_INIT = 1
 MODE_EXEC = 2
 NEWS = 'ニュース'
-GNAVI = 'ぐるなび'
+CAT = 'にゃーん'
 KEIBA = '競馬'
 
 
