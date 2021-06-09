@@ -53,6 +53,7 @@ CONFIG_LONG_TIME_NO_SEE = 200000
 URL_COVID19_TOKYO = 'https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/daily_positive_detail.json'
 URL_MEZAMASHI_URANAI = 'http://fcs2.sp2.fujitv.co.jp/fortune.php'
 URL_HATENA_TECH_NEWS = 'https://b.hatena.ne.jp/hotentry/it'
+URL_CAT_API = 'https://thatcopy.pw/catapi/rest/'
 
 
 # ACTION定義
