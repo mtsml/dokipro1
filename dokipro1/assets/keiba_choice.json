@@ -15,7 +15,7 @@
           "action": {
             "type": "postback",
             "label": "安田記念",
-            "data": "202105030211"
+            "data": "keiba,202105030211"
           },
           "style": "primary"
         }

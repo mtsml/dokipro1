@@ -78,12 +78,14 @@ def handle_postback_event(event):
 
     user_id = event.source.user_id
     timestamp = event.timestamp
-    data = event.postback.data
+    action_id, data = event.postback.data.split(',')
     print('user_id: ', user_id)
+    print('action_id: ', action_id)
     print('data: ', data)
 
-    message = keiba.guess_horse_racing(int(data))
-    util.reply_flex_message(event.reply_token, 'sanrentan', message)
+    if action_id == const.ACTION.KEIBA.ID:
+        message = keiba.guess_horse_racing(int(data))
+        util.reply_flex_message(event.reply_token, 'sanrentan', message)
 
 
 @handler.add(FollowEvent)
