@@ -60,7 +60,10 @@ def handle_message(event):
     message= None
     if text == const.COVID19: message = util.get_covid19_info(const.TODAY)
     elif text == const.NEWS:  message = util.get_tech_news(3)
-    elif text == const.CAT: message = util.get_cat_image()
+    elif text == const.CAT:
+        message = util.get_cat_image()
+        util.reply_image_message(event.reply_token, message)
+        return
     elif text == const.KEIBA:
         message = keiba.get_race_choice_message()
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
