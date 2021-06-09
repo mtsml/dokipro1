@@ -26,11 +26,18 @@ def send_message(user_id, text):
 
 def reply_flex_message(reply_token, alt_text, contents):
     line_bot_api.reply_message(
-        reply_token = reply_token, 
+        reply_token = reply_token,
         messages = FlexSendMessage(
             alt_text=alt_text,
             contents=contents
         )
+    )
+
+
+def reply_image_message(reply_token, image_message):
+    line_bot_api.reply_message(
+        reply_token = reply_token,
+        messages = image_message
     )
 
 
