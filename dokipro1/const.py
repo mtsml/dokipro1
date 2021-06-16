@@ -43,7 +43,7 @@ MODE_EXEC = 2
 NEWS = 'ニュース'
 CAT = 'にゃーん'
 KEIBA = '競馬'
-
+POKEMON = 'ポケモンクイズ'
 
 # 設定時間
 CONFIG_LONG_TIME_NO_SEE = 200000

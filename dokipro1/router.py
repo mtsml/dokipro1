@@ -64,6 +64,10 @@ def handle_message(event):
         message = util.get_cat_image()
         util.reply_image_message(event.reply_token, message)
         return
+    elif text == const.POKEMON:
+        message = keiba.get_pokemon_quiz_message()
+        util.reply_flex_message(event.reply_token, 'FlexMenu', message)
+        return
     elif text == const.KEIBA:
         message = keiba.get_race_choice_message()
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
