@@ -1,0 +1,25 @@
+{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "pokemon",
+          "size": "xl",
+          "align": "center"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "label": "安田記念",
+            "data": "keiba,202105030211"
+          },
+          "style": "primary"
+        }
+      ],
+      "spacing": "lg"
+    }
+  }

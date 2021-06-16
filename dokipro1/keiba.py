@@ -18,6 +18,15 @@ def get_race_choice_message():
     return message
 
 
+def get_pokemon_quiz_message():
+    dirname = os.getcwd()
+    path = os.path.join(dirname, 'dokipro1/assets/pokemon_quiz.json')
+    data = open(path, mode='r')
+    message = json.load(data)
+    data.close()
+    return message
+
+
 def guess_horse_racing(race_id):
     """
     競馬を当てる。
