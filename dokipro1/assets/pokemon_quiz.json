@@ -1,25 +1,64 @@
 {
-    "type": "bubble",
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "pokemon",
-          "size": "xl",
-          "align": "center"
-        },
-        {
-          "type": "button",
-          "action": {
-            "type": "postback",
-            "label": "安田記念",
-            "data": "keiba,202105030211"
-          },
-          "style": "primary"
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "action": {
+      "type": "uri",
+      "uri": "https://linecorp.com"
+    },
+    "contents": [
+      {
+        "type": "text",
+        "text": "ポケモンクイズ",
+        "size": "xl",
+        "weight": "bold"
+      },
+      {
+        "type": "text",
+        "wrap": true,
+        "color": "#333333",
+        "size": "md",
+        "text": "全国ポケモン図鑑において、\n図鑑番号 001 のポケモンは何でしょう?"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "color": "#7dbf5e",
+        "action": {
+          "type": "message",
+          "label": "フシギダネ",
+          "text": "正解!!\\nhttps://zukan.pokemon.co.jp/"
         }
-      ],
-      "spacing": "lg"
-    }
+      },
+      {
+        "type": "button",
+        "style": "primary",
+        "color": "#db774f",
+        "action": {
+          "type": "message",
+          "label": "ヒトカゲ",
+          "text": "残念"
+        }
+      },
+      {
+        "type": "button",
+        "style": "primary",
+        "color": "#549ff0",
+        "action": {
+          "type": "message",
+          "label": "ゼニガメ",
+          "text": "残念"
+        }
+      }
+    ],
+    "spacing": "md"
   }
+}
