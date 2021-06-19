@@ -14,12 +14,21 @@
           "type": "button",
           "action": {
             "type": "postback",
-            "label": "安田記念",
-            "data": "keiba,202105030211"
+            "label": "マーメイドS",
+            "data": "keiba,202109030211"
           },
           "style": "primary"
-        }
-      ],
+        },
+        {
+            "type": "button",
+            "action": {
+              "type": "postback",
+              "label": "ユニコーンS",
+              "data": "keiba,202105030611"
+            },
+            "style": "primary"
+          }
+        ],
       "spacing": "lg"
     }
   }
