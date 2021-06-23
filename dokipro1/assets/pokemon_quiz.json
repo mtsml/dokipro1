@@ -35,7 +35,7 @@
         "action": {
           "type": "postback",
           "label": "フシギダネ",
-          "data": "pokemon,ふしぎだね"
+          "data": "pokemon,フシギダネ"
         }
       },
       {
@@ -45,7 +45,7 @@
         "action": {
           "type": "postback",
           "label": "ヒトカゲ",
-          "data": "pokemon,ひとかげ"
+          "data": "pokemon,ヒトカゲ"
         }
       },
       {
@@ -55,7 +55,7 @@
         "action": {
           "type": "postback",
           "label": "ゼニガメ",
-          "data": "pokemon,ぜにがめ"
+          "data": "pokemon,ゼニガメ"
         }
       }
     ],
