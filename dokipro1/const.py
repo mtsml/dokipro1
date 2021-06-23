@@ -62,3 +62,5 @@ class ACTION:
         ID = 'cat'
     class KEIBA:
         ID = 'keiba'
+    class POKEMON:
+        ID = 'pokemon'
