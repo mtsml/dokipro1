@@ -33,9 +33,9 @@
         "style": "primary",
         "color": "#7dbf5e",
         "action": {
-          "type": "message",
+          "type": "postback",
           "label": "フシギダネ",
-          "text": "正解!!\\nhttps://zukan.pokemon.co.jp/"
+          "data": "pokemon,ふしぎだね"
         }
       },
       {
@@ -43,9 +43,9 @@
         "style": "primary",
         "color": "#db774f",
         "action": {
-          "type": "message",
+          "type": "postback",
           "label": "ヒトカゲ",
-          "text": "残念"
+          "data": "pokemon,ひとかげ"
         }
       },
       {
@@ -53,9 +53,9 @@
         "style": "primary",
         "color": "#549ff0",
         "action": {
-          "type": "message",
+          "type": "postback",
           "label": "ゼニガメ",
-          "text": "残念"
+          "data": "pokemon,ぜにがめ"
         }
       }
     ],
