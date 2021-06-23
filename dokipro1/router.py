@@ -94,7 +94,10 @@ def handle_postback_event(event):
         message = keiba.guess_horse_racing(int(data))
         util.reply_flex_message(event.reply_token, 'sanrentan', message)
     elif action_id == const.ACTION.POKEMON.ID:
-        message = event.postback.label
+        message = '残念'
+        if data == 'フシギダネ':
+            message = '正解!!'
+        
         util.reply(event.reply_token, message)
 
 
