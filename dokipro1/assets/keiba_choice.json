@@ -14,20 +14,11 @@
           "type": "button",
           "action": {
             "type": "postback",
-            "label": "マーメイドS",
-            "data": "keiba,202109030211"
+            "label": "宝塚記念",
+            "data": "keiba,2016105526"
           },
           "style": "primary"
-        },
-        {
-            "type": "button",
-            "action": {
-              "type": "postback",
-              "label": "ユニコーンS",
-              "data": "keiba,202105030611"
-            },
-            "style": "primary"
-          }
+        }
         ],
       "spacing": "lg"
     }
