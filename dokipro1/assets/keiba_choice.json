@@ -15,7 +15,7 @@
           "action": {
             "type": "postback",
             "label": "宝塚記念",
-            "data": "keiba,2016105526"
+            "data": "keiba,202109030411"
           },
           "style": "primary"
         }
