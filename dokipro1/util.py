@@ -94,7 +94,7 @@ def get_cat_image():
 
 
 def get_pokemon_image():
-    id = random.randrange(1, 899, 1)
+    id = str(random.randrange(1, 899, 1))
     res = requests.get('https://pokeapi.co/api/v2/pokemon/' + id + '/')
     json_data = res.json()
     # url = json_data['webpurl']
