@@ -4,13 +4,13 @@ from flask import Blueprint, request, abort, render_template
 from linebot import WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import (
-    FollowEvent, 
-    MessageEvent, 
-    TextMessage, 
+    FollowEvent,
+    MessageEvent,
+    TextMessage,
     UnfollowEvent,
     PostbackEvent
 )
-   
+
 import dokipro1.a3rt as a3rt
 import dokipro1.const as const
 import dokipro1.dynamo as dynamo
@@ -65,8 +65,10 @@ def handle_message(event):
         util.reply_image_message(event.reply_token, message)
         return
     elif text == const.POKEMON:
-        message = keiba.get_pokemon_quiz_message()
-        util.reply_flex_message(event.reply_token, 'FlexMenu', message)
+        message = util.get_pokemon_image()
+        # message = keiba.get_pokemon_quiz_message()
+        util.reply_image_message(event.reply_token, message)
+        # util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
     elif text == const.KEIBA:
         message = keiba.get_race_choice_message()
@@ -97,7 +99,7 @@ def handle_postback_event(event):
         message = '残念'
         if data == 'フシギダネ':
             message = '正解!!'
-        
+
         util.reply(event.reply_token, message)
 
 

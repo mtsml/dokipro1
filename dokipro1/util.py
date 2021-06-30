@@ -9,7 +9,7 @@ import dokipro1.const as const
 
 
 # LINE Messesaging API
-line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN) 
+line_bot_api = LineBotApi(const.CHANNEL_ACCESS_TOKEN)
 
 
 def reply(reply_token, text):
@@ -89,5 +89,17 @@ def get_cat_image():
     image_message = ImageSendMessage(
         original_content_url=url,
         preview_image_url=url
+    )
+    return image_message
+
+
+def get_pokemon_image():
+    res = requests.get('https://pokeapi.co/api/v2/pokemon/pikachu/')
+    json_data = res.json()
+    # url = json_data['webpurl']
+    image =json_data['sprites']['front_default']
+    image_message = ImageSendMessage(
+        original_content_url=image,
+        preview_image_url=image
     )
     return image_message
