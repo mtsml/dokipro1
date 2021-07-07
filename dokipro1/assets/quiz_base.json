@@ -1,0 +1,74 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "image",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+            "size": "full",
+            "margin": "none"
+          }
+        ],
+        "paddingAll": "none"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "このポケモンはなに？"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "action",
+              "uri": "http://linecorp.com/"
+            },
+            "color": "#333333"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "action",
+              "uri": "http://linecorp.com/"
+            },
+            "color": "#333333"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "action",
+              "uri": "http://linecorp.com/"
+            },
+            "color": "#333333"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "action",
+              "uri": "http://linecorp.com/"
+            },
+            "color": "#333333"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -98,9 +98,34 @@ def get_pokemon_image():
     res = requests.get('https://pokeapi.co/api/v2/pokemon/' + id + '/')
     json_data = res.json()
     # url = json_data['webpurl']
-    image =json_data['sprites']['front_default']
-    image_message = ImageSendMessage(
-        original_content_url=image,
-        preview_image_url=image
-    )
-    return image_message
+    image_url =json_data['sprites']['front_default']
+    message = build_pokemon_message (image_url)
+    # image_message = ImageSendMessage(
+    #     original_content_url=image,
+    #     preview_image_url=image
+    # )
+    return message
+
+def build_pokemon_message(pokemon_image):
+    """
+    三連単のFlexMessageを作成し返却する
+    """
+
+    # templateを読み込む
+    dirname = os.getcwd()
+    path = os.path.join(dirname, 'dokipro1/assets/quiz_base.json')
+    data = open(path, mode='r')
+    template = json.load(data)
+    data.close()
+
+    # ポケモンイメージを書き込む
+    template['body']['contents'][0]['contents'][0]['url'] = pokemon_image
+
+    # 馬の情報を書き込む
+    # for index, umaban in enumerate(sanrentan):
+    #     horse_info = horse_list[umaban]
+    #     template['body']['contents'][2]['contents'][index*2]['contents'][0]['text'] = horse_info['umaban']
+    #     template['body']['contents'][2]['contents'][index*2]['contents'][1]['contents'][0]['text'] = horse_info['horse_name']
+    #     template['body']['contents'][2]['contents'][index*2]['contents'][1]['contents'][1]['text'] = horse_info['jockey']
+
+    return template
