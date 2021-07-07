@@ -113,7 +113,7 @@ def get_random_name():
     id_list = random.sample(range(1, 899), 3)
     name_list = []
     for id in id_list:
-        res = requests.get('https://pokeapi.co/api/v2/pokemon/' + id + '/')
+        res = requests.get('https://pokeapi.co/api/v2/pokemon/' + str(id) + '/')
         json_data = res.json()
         image_name =json_data['name']
         name_list.append(image_name)
