@@ -102,7 +102,7 @@ def get_pokemon_image():
     # url = json_data['webpurl']
     image_url =json_data['sprites']['front_default']
     image_name =json_data['name']
-    message = build_pokemon_message (image_url)
+    message = build_pokemon_message (image_url, image_name)
     # image_message = ImageSendMessage(
     #     original_content_url=image,
     #     preview_image_url=image
