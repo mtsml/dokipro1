@@ -14,8 +14,8 @@
           "type": "button",
           "action": {
             "type": "postback",
-            "label": "宝塚記念",
-            "data": "keiba,202109030411"
+            "label": "ラジオNIKKEI賞",
+            "data": "keiba,202103010211"
           },
           "style": "primary"
         }
