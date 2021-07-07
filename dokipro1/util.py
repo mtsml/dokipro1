@@ -1,4 +1,6 @@
 import random
+import json
+import os
 
 from bs4 import BeautifulSoup
 from linebot import LineBotApi
