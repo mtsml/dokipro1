@@ -128,4 +128,5 @@ def build_pokemon_message(pokemon_list, collect):
     template['body']['contents'][2]['contents'][1]['action']['label'] = pokemon_list[1]['name']
     template['body']['contents'][2]['contents'][2]['action']['label'] = pokemon_list[2]['name']
     template['body']['contents'][2]['contents'][3]['action']['label'] = pokemon_list[3]['name']
+    template['body']['contents'][2]['contents'][collect]['action']['data'] = "pokemon,true"
     return template

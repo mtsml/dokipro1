@@ -97,7 +97,7 @@ def handle_postback_event(event):
         util.reply_flex_message(event.reply_token, 'sanrentan', message)
     elif action_id == const.ACTION.POKEMON.ID:
         message = '残念'
-        if data == 'フシギダネ':
+        if data == 'true':
             message = '正解!!'
 
         util.reply(event.reply_token, message)
