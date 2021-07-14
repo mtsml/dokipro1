@@ -121,7 +121,6 @@ def build_pokemon_message(pokemon_list, collect):
     data = open(path, mode='r')
     template = json.load(data)
     data.close()
-    random_name_list = get_random_name()
 
     # ポケモンイメージを書き込む
     template['body']['contents'][0]['contents'][0]['url'] = pokemon_list[collect]['image']
