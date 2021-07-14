@@ -96,34 +96,24 @@ def get_cat_image():
 
 
 def get_pokemon_image():
-    id = str(random.randrange(1, 899, 1))
-    res = requests.get('https://pokeapi.co/api/v2/pokemon/' + id + '/')
-    json_data = res.json()
-    # url = json_data['webpurl']
-    image_url =json_data['sprites']['front_default']
-    image_name =json_data['name']
-    message = build_pokemon_message (image_url, image_name)
-    # image_message = ImageSendMessage(
-    #     original_content_url=image,
-    #     preview_image_url=image
-    # )
+    collect = random.randrange(0, 4, 1)
+    message = build_pokemon_message(get_random_pokemon(), collect)
     return message
 
-def get_random_name():
-    id_list = random.sample(range(1, 899), 3)
-    name_list = []
+def get_random_pokemon():
+    id_list = random.sample(range(1, 899), 4)
+    pokemon_list = []
     for id in id_list:
         res = requests.get('https://pokeapi.co/api/v2/pokemon/' + str(id) + '/')
         json_data = res.json()
         image_name =json_data['name']
-        name_list.append(image_name)
-    return name_list
+        image_url =json_data['sprites']['front_default']
+        dictionary = {'name': image_name, 'image': image_url}
+        pokemon_list.append(dictionary)
+    return pokemon_list
 
 
-def build_pokemon_message(pokemon_image, image_name):
-    """
-    三連単のFlexMessageを作成し返却する
-    """
+def build_pokemon_message(pokemon_list, collect):
 
     # templateを読み込む
     dirname = os.getcwd()
@@ -134,16 +124,9 @@ def build_pokemon_message(pokemon_image, image_name):
     random_name_list = get_random_name()
 
     # ポケモンイメージを書き込む
-    template['body']['contents'][0]['contents'][0]['url'] = pokemon_image
-    template['body']['contents'][2]['contents'][0]['action']['label'] = image_name
-    template['body']['contents'][2]['contents'][1]['action']['label'] = random_name_list[0]
-    template['body']['contents'][2]['contents'][2]['action']['label'] = random_name_list[1]
-    template['body']['contents'][2]['contents'][3]['action']['label'] = random_name_list[2]
-    # 馬の情報を書き込む
-    # for index, umaban in enumerate(sanrentan):
-    #     horse_info = horse_list[umaban]
-    #     template['body']['contents'][2]['contents'][index*2]['contents'][0]['text'] = horse_info['umaban']
-    #     template['body']['contents'][2]['contents'][index*2]['contents'][1]['contents'][0]['text'] = horse_info['horse_name']
-    #     template['body']['contents'][2]['contents'][index*2]['contents'][1]['contents'][1]['text'] = horse_info['jockey']
-
+    template['body']['contents'][0]['contents'][0]['url'] = pokemon_list[collect]['image']
+    template['body']['contents'][2]['contents'][0]['action']['label'] = pokemon_list[0]['name']
+    template['body']['contents'][2]['contents'][1]['action']['label'] = pokemon_list[1]['name']
+    template['body']['contents'][2]['contents'][2]['action']['label'] = pokemon_list[2]['name']
+    template['body']['contents'][2]['contents'][3]['action']['label'] = pokemon_list[3]['name']
     return template
