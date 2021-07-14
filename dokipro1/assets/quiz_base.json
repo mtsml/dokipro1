@@ -34,36 +34,36 @@
           {
             "type": "button",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "action",
-              "uri": "http://linecorp.com/"
+              "data": "pokemon,false"
             },
             "color": "#333333"
           },
           {
             "type": "button",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "action",
-              "uri": "http://linecorp.com/"
+              "data": "pokemon,false"
             },
             "color": "#333333"
           },
           {
             "type": "button",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "action",
-              "uri": "http://linecorp.com/"
+              "data": "pokemon,false"
             },
             "color": "#333333"
           },
           {
             "type": "button",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "action",
-              "uri": "http://linecorp.com/"
+              "data": "pokemon,false"
             },
             "color": "#333333"
           }
