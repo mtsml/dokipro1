@@ -14,8 +14,8 @@
           "type": "button",
           "action": {
             "type": "postback",
-            "label": "ラジオNIKKEI賞",
-            "data": "keiba,202103010211"
+            "label": "函館記念",
+            "data": "keiba,202102010611"
           },
           "style": "primary"
         }
