@@ -20,8 +20,8 @@ def build_hinatazaka_json():
     for article in get_article_list():
         bubble_json = util.get_json(bubble_path)
         bubble_json["hero"]["url"] = article.find('img').get('src')
-        bubble_json["body"]["contents"][0]["text"] = article.find('div', class_='c-blog-article__title').string
-        bubble_json["body"]["contents"][1]["contents"][0]["text"] = article.find('div', class_='c-blog-article__name').string
+        bubble_json["body"]["contents"][0]["text"] = article.find('div', class_='c-blog-article__title').string.strip()
+        bubble_json["body"]["contents"][1]["contents"][0]["text"] = article.find('div', class_='c-blog-article__name').string.strip()
         json["contents"].append(bubble_json)
 
     return json
