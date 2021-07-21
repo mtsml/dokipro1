@@ -1,6 +1,6 @@
 import random
 import requests
-import datetime
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import dokipro1.util as util
 
@@ -8,8 +8,8 @@ HINATAZAKA_URL = 'https://www.hinatazaka46.com/s/official/diary/member/list?ima=
 
 
 def get_article_list():
-    today = datetime.datetime.now().strftime('%Y%m%d')
-    res = requests.get(HINATAZAKA_URL.format(today))
+    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y%m%d')
+    res = requests.get(HINATAZAKA_URL.format(yesterday))
     soup = BeautifulSoup(res.text, 'html.parser')
     article_list = soup.find_all('div', class_='p-blog-article')
 
