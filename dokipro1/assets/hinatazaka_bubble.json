@@ -55,9 +55,9 @@
         "style": "primary",
         "color": "#7cc8e9",
         "action": {
-          "type": "uri",
+          "type": "postback",
           "label": "このブログの画像を GET",
-          "uri": ""
+          "data": ""
         }
       }
     ]

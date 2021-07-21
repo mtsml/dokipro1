@@ -65,3 +65,5 @@ class ACTION:
         ID = 'keiba'
     class POKEMON:
         ID = 'pokemon'
+    class HINATAZAKA:
+        ID = 'hinatazaka'

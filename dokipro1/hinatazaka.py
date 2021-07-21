@@ -31,8 +31,17 @@ def build_hinatazaka_json():
         bubble_json["body"]["contents"][0]["text"] = article.find('div', class_='c-blog-article__title').string.strip()
         bubble_json["body"]["contents"][1]["contents"][0]["text"] = article.find('div', class_='c-blog-article__name').string.strip()
         bubble_json["footer"]["contents"][0]["action"]["uri"] = article_url
-        bubble_json["footer"]["contents"][1]["action"]["uri"] = image_url
+        bubble_json["footer"]["contents"][1]["action"]["data"] = f'hinatazaka,{article_url}'
 
         json["contents"].append(bubble_json)
 
     return json
+
+
+def get_image_url_list(article_url):
+    res = requests.get(article_url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    article = soup.find('div', class_='p-blog-article')
+    image_list = article.find_all('img')
+    image_url_list = [image.get('src') for image in image_list]
+    return image_url_list
