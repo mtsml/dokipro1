@@ -26,6 +26,16 @@ def send_message(user_id, text):
         user_id, TextSendMessage(text=text))
 
 
+def send_image(user_id, image_url):
+    line_bot_api.push_message(
+        user_id,
+        ImageSendMessage(
+            original_content_url=image_url,
+            preview_image_url=image_url
+        )
+    )
+
+
 def reply_flex_message(reply_token, alt_text, contents):
     line_bot_api.reply_message(
         reply_token = reply_token,
