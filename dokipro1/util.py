@@ -130,3 +130,11 @@ def build_pokemon_message(pokemon_list, collect):
     template['body']['contents'][2]['contents'][3]['action']['label'] = pokemon_list[3]['name']
     template['body']['contents'][2]['contents'][collect]['action']['data'] = "pokemon,true"
     return template
+
+def get_json(path):
+    dirname = os.getcwd()
+    path = os.path.join(dirname, path)
+    data = open(path, mode='r')
+    message = json.load(data)
+    data.close()
+    return message

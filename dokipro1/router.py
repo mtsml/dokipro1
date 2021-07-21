@@ -74,6 +74,10 @@ def handle_message(event):
         message = keiba.get_race_choice_message()
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
+    elif text == const.HINATAZAKA:
+        message = build_hinatazaka_json()
+        util.reply_flex_message(event.reply_token, 'FlexMenu', message)
+        return
     else:                     message = a3rt.get_reply_message(text)
 
     util.reply(event.reply_token, message)
