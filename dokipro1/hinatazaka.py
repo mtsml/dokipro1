@@ -42,7 +42,7 @@ def build_hinatazaka_json():
 def to_short_text(article):
     # ブログ内でSEPARATERの文字列が使われていたらおしまい
     SEPARATER = ','
-    return ' '.join([x.strip() for x in article.get_text(SEPARATER).strip(SEPARATER) if x.strip() != ''])[:49] + '…'
+    return ' '.join([x.strip() for x in article.get_text(SEPARATER).split(SEPARATER) if x.strip() != ''])[:49] + '…'
 
 
 def get_image_url_list(article_url):
