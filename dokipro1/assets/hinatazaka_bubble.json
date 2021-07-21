@@ -45,6 +45,16 @@
         "style": "primary",
         "color": "#7cc8e9",
         "action": {
+            "type": "uri",
+            "label": "このブログを見に行く",
+            "uri": ""
+        }
+      },
+      {
+        "type": "button",
+        "style": "primary",
+        "color": "#7cc8e9",
+        "action": {
           "type": "uri",
           "label": "このブログの画像を GET",
           "uri": ""
