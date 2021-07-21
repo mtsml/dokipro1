@@ -16,6 +16,7 @@ import dokipro1.const as const
 import dokipro1.dynamo as dynamo
 import dokipro1.util as util
 import dokipro1.keiba as keiba
+import dokipro1.hinatazaka as hinatazaka
 
 
 router = Blueprint('router', __name__)
@@ -75,7 +76,7 @@ def handle_message(event):
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
     elif text == const.HINATAZAKA:
-        message = build_hinatazaka_json()
+        message = hinatazaka.build_hinatazaka_json()
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
     else:                     message = a3rt.get_reply_message(text)
