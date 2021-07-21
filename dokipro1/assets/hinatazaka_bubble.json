@@ -47,7 +47,7 @@
         "action": {
           "type": "uri",
           "label": "このブログの画像を GET",
-          "uri": "https://linecorp.com"
+          "uri": ""
         }
       }
     ]
