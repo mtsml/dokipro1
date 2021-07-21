@@ -30,13 +30,17 @@ def build_hinatazaka_json():
         bubble_json["hero"]["url"] = image_url
         bubble_json["body"]["contents"][0]["text"] = article.find('div', class_='c-blog-article__title').string.strip()
         bubble_json["body"]["contents"][1]["contents"][0]["text"] = article.find('div', class_='c-blog-article__name').string.strip()
-        bubble_json["body"]["contents"][2]["contents"][0]["text"] = article.find('div', class_='c-blog-article__text').get_text(' ').strip()[:49] + '…'
+        bubble_json["body"]["contents"][2]["contents"][0]["text"] = to_short_text(article.find('div', class_='c-blog-article__text'))
         bubble_json["body"]["contents"][3]["contents"][0]["action"]["uri"] = article_url
         bubble_json["footer"]["contents"][0]["action"]["data"] = f'hinatazaka,{article_url}'
 
         json["contents"].append(bubble_json)
 
     return json
+
+
+def to_short_text(article):
+    return ' '.join([x.strip() for x in article if x.strip() != ''])[:49] + '…'
 
 
 def get_image_url_list(article_url):
