@@ -32,6 +32,34 @@
             "flex": 0
           }
         ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "",
+            "wrap": true
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "つづきを読む",
+            "align": "end",
+            "action": {
+              "type": "uri",
+              "label": "action",
+              "uri": ""
+            },
+            "decoration": "underline"
+          }
+        ]
       }
     ]
   },
@@ -40,16 +68,6 @@
     "layout": "vertical",
     "spacing": "sm",
     "contents": [
-      {
-        "type": "button",
-        "style": "primary",
-        "color": "#7cc8e9",
-        "action": {
-            "type": "uri",
-            "label": "このブログを見に行く",
-            "uri": ""
-        }
-      },
       {
         "type": "button",
         "style": "primary",
