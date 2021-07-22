@@ -106,9 +106,9 @@ def handle_postback_event(event):
             message = '正解!!'
         util.reply(event.reply_token, message)
     elif action_id == const.ACTION.HINATAZAKA.ID:
+        util.reply(event.reply_token, '少々お待ちください。')
         for image_url in hinatazaka.get_image_url_list(data):
             util.send_image(user_id, image_url)
-        util.reply(event.reply_token, 'これで満足か？')
 
 
 @handler.add(FollowEvent)
