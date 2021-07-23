@@ -25,10 +25,8 @@ def build_hinatazaka_json():
     json = util.get_json(base_path)
     for article in get_article_list():
         bubble_json = util.get_json(bubble_path)
-        image_url = article.find('img').get('src')
-        if not is_image_url_alive(image_url):
-            image_url = HINATAZAKA_OFFICIAL_LOGO
-
+        image_url_list = get_alive_image_url_list(article)
+        image_url = image_url_list[0] if len(image_url_list) > 0 else HINATAZAKA_OFFICIAL_LOGO
         article_url = HINATAZAKA_HOST + article.find('a', class_='c-button-blog-detail').get('href')
 
         bubble_json["hero"]["url"] = image_url
@@ -52,15 +50,18 @@ def to_short_text(article):
 def get_image_url_list(article_url):
     soup = util.get_soup_by_url(article_url)
     article = soup.find('div', class_='p-blog-article')
-    image_list = article.find_all('img')
-    all_image_url_list = [image.get('src') for image in image_list]
-    image_url_list = []
-    for image_url in all_image_url_list:
-        if is_image_url_alive(image_url):
-            image_url_list.append(image_url)
+    image_url_list = get_alive_image_url_list(article)
 
     return image_url_list
 
 
 def is_image_url_alive(image_url):
     return image_url.startswith(HINATAZAKA_IMAGE_HOST)
+
+
+def get_alive_image_url_list(article):
+    image_list = article.find_all('img')
+    image_url_list = [image.get('src') for image in image_list]
+    alive_image_url_list = [image_url for image_url in image_url_list if is_image_url_alive(image_url)]
+
+    return alive_image_url_list
