@@ -26,7 +26,8 @@ def build_hinatazaka_json():
     for article in get_article_list():
         bubble_json = util.get_json(bubble_path)
         image_url = article.find('img').get('src')
-        image_url = HINATAZAKA_OFFICIAL_LOGO if not is_image_url_alive(image_url)
+        if not is_image_url_alive(image_url):
+            image_url = HINATAZAKA_OFFICIAL_LOGO
 
         article_url = HINATAZAKA_HOST + article.find('a', class_='c-button-blog-detail').get('href')
 
@@ -55,7 +56,8 @@ def get_image_url_list(article_url):
     all_image_url_list = [image.get('src') for image in image_list]
     image_url_list = []
     for image_url in all_image_url_list:
-        image_url_list.append(image_url) if is_image_url_alive(image_url)
+        if is_image_url_alive(image_url):
+            image_url_list.append(image_url)
 
     return image_url_list
 
