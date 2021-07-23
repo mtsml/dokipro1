@@ -13,7 +13,7 @@ HINATAZAKA_OFFICIAL_LOGO = 'https://cdn.hinatazaka46.com/files/14/hinata/img/log
 
 def get_article_list():
     yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y%m%d')
-    soup = get_article(HINATAZAKA_URL.format(yesterday))
+    soup = util.get_soup_by_url(HINATAZAKA_URL.format(yesterday))
     article_list = soup.find_all('div', class_='p-blog-article')
 
     return article_list
@@ -50,7 +50,7 @@ def to_short_text(article):
 
 
 def get_image_url_list(article_url):
-    soup = get_article(article_url)
+    soup = util.get_soup_by_url(article_url)
     article = soup.find('div', class_='p-blog-article')
     image_list = article.find_all('img')
     all_image_url_list = [image.get('src') for image in image_list]
@@ -61,11 +61,6 @@ def get_image_url_list(article_url):
 
     return image_url_list
 
-
-def get_article(article_url):
-    res = requests.get(article_url)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    return soup
 
 def is_image_url_alive(image_url):
     return image_url.startswith(HINATAZAKA_IMAGE_HOST)
