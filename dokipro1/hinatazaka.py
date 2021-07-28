@@ -27,7 +27,7 @@ def get_member_list(name):
             id = member["id"]
             break
     soup = util.get_soup_by_url(HINATAZAKA_MEMBER_URL.format(id))
-    article_list = soup.find_all('div', class_='p-blog-article').slice[:3]
+    article_list = soup.find_all('div', class_='p-blog-article')[:3]
 
     return article_list
 
