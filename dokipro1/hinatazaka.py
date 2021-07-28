@@ -3,6 +3,7 @@ import requests
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import dokipro1.util as util
+import dokipro1.const as const
 
 
 HINATAZAKA_HOST = 'https://www.hinatazaka46.com'
@@ -21,7 +22,7 @@ def get_article_list():
 
 def get_member_list(name):
     id = ""
-    for member in HINATAZAKA_MEMBER:
+    for member in const.HINATAZAKA_MEMBER:
         if member["member_name"] == name:
             id = member["id"]
             break
