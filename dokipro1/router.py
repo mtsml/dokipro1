@@ -79,7 +79,7 @@ def handle_message(event):
         message = hinatazaka.build_hinatazaka_json(get_article_list())
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
-    elif is_hinatazaka_member(text):
+    elif hinatazaka.is_hinatazaka_member(text):
         message = hinatazaka.build_hinatazaka_json(get_member_list(text))
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
