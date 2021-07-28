@@ -7,6 +7,7 @@ import dokipro1.util as util
 
 HINATAZAKA_HOST = 'https://www.hinatazaka46.com'
 HINATAZAKA_URL = 'https://www.hinatazaka46.com/s/official/diary/member/list?ima=0000&dy={}'
+HINATAZAKA_MEMBER_URL = 'https://www.hinatazaka46.com/s/official/diary/member/list?ima=0000&ct={}'
 HINATAZAKA_IMAGE_HOST = 'https://cdn.hinatazaka46.com'
 HINATAZAKA_OFFICIAL_LOGO = 'https://cdn.hinatazaka46.com/files/14/hinata/img/logo_side.svg'
 
@@ -18,12 +19,22 @@ def get_article_list():
 
     return article_list
 
+def get_member_list(name):
+    id = ""
+    for member in HINATAZAKA_MEMBER:
+        if member["member_name"] == name:
+            id = member["id"]
+            break
+    soup = util.get_soup_by_url(HINATAZAKA_MEMBER_URL.format(id))
+    article_list = soup.find_all('div', class_='p-blog-article').slice[:3]
 
-def build_hinatazaka_json():
+    return article_list
+
+def build_hinatazaka_json(article_list):
     base_path = 'dokipro1/assets/hinatazaka_base.json'
     bubble_path = 'dokipro1/assets/hinatazaka_bubble.json'
     json = util.get_json(base_path)
-    for article in get_article_list():
+    for article in article_list:
         bubble_json = util.get_json(bubble_path)
         image_url_list = get_alive_image_url_list(article)
         image_url = image_url_list[0] if len(image_url_list) > 0 else HINATAZAKA_OFFICIAL_LOGO
@@ -40,6 +51,11 @@ def build_hinatazaka_json():
 
     return json
 
+def is_hinatazaka_member(name):
+    for member in HINATAZAKA_MEMBER:
+        if member["member_name"] == name:
+            return True
+    return False
 
 def to_short_text(article):
     # ブログ内でSEPARATERの文字列が使われていたらおしまい
