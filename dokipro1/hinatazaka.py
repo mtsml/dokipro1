@@ -53,7 +53,7 @@ def build_hinatazaka_json(article_list):
     return json
 
 def is_hinatazaka_member(name):
-    for member in HINATAZAKA_MEMBER:
+    for member in const.HINATAZAKA_MEMBER:
         if member["member_name"] == name:
             return True
     return False
