@@ -76,7 +76,7 @@ def handle_message(event):
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
     elif text == const.HINATAZAKA:
-        message = hinatazaka.build_hinatazaka_json(hinatazaka.get_article_list())
+        message = util.get_json('dokipro1/assets/hinatazaka_member.json')
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
     elif hinatazaka.is_hinatazaka_member(text):
