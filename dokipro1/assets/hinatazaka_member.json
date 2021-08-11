@@ -1,0 +1,287 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "一期生",
+            "size": "lg",
+            "weight": "bold",
+            "align": "start",
+            "margin": "none"
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "潮 紗理菜",
+              "text": "潮紗理菜"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "影山 優佳",
+              "text": "影山優佳"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "加藤 史帆",
+              "text": "加藤史帆"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "齊藤 京子",
+              "text": "齊藤京子"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "佐々木 久美",
+              "text": "佐々木久美"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "佐々木 美玲",
+              "text": "佐々木美玲"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "高瀬 愛奈",
+              "text": "高瀬愛奈"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "高本 彩花",
+              "text": "高本彩花"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "東村 芽依",
+              "text": "東村芽依"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "二期生",
+            "size": "lg",
+            "weight": "bold",
+            "align": "start"
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "金村 美玖",
+              "text": "金村美玖"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "河田 陽菜",
+              "text": "河田陽菜"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "小坂 菜緒",
+              "text": "小坂菜緒"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "富田 鈴花",
+              "text": "富田鈴花"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "丹生 明里",
+              "text": "丹生明里"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "濱岸 ひより",
+              "text": "濱岸ひより"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "松田 好花",
+              "text": "松田好花"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "宮田 愛萌",
+              "text": "宮田愛萌"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "渡邉 美穂",
+              "text": "渡邉美穂"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "三期生",
+            "size": "lg",
+            "weight": "bold",
+            "align": "start"
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "上村 ひなの",
+              "text": "上村ひなの"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "髙橋 未来虹",
+              "text": "髙橋未来虹"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "森本 茉莉",
+              "text": "森本茉莉"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "山口 陽世",
+              "text": "山口陽世"
+            }
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "color": "#7CC8E9",
+            "action": {
+              "type": "message",
+              "label": "ポカ",
+              "text": "ポカ"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
