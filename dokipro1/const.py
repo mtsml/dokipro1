@@ -13,10 +13,6 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_DYNAMO_TABLE_NM = 'dokipro1'
 
 
-# A3RT
-A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
-
-
 # love point
 LOVE_POINT_DEFAULT = 0
 LOVE_POINT_OF_MESSAGE = 1
@@ -30,7 +26,6 @@ MESSAGE_LONG_TIME_NO_SEE = '私のこと忘れちゃった？'
 MESSAGE_COVID19 = '{}の東京都のコロナ陽性患者数は{}人です。\n（前日比: {} 人）'
 MESSAGE_TECH_NEWS = '本日のテクノロジーニュースです'
 MESSAGE_FORTUNE = 'おはようございます。\n{}の今日の運勢は{}です。\n\n'
-MESSAGE_REPLY_DEFAULT = 'ちょっと何言ってるか分からないです'
 
 
 # 定数
