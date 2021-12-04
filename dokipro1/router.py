@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import os
 import random
 
 from flask import Blueprint, request, abort, render_template
@@ -11,12 +13,16 @@ from linebot.models import (
     PostbackEvent
 )
 
-import dokipro1.a3rt as a3rt
+from a3rt import A3rt
 import dokipro1.const as const
 import dokipro1.dynamo as dynamo
 import dokipro1.util as util
 import dokipro1.keiba as keiba
 import dokipro1.hinatazaka as hinatazaka
+
+
+# A3RT
+A3RT_TALK_API_KEY = os.environ['A3RT_TALK_API_KEY']
 
 
 router = Blueprint('router', __name__)
@@ -83,7 +89,9 @@ def handle_message(event):
         message = hinatazaka.build_hinatazaka_json(hinatazaka.get_member_list(text))
         util.reply_flex_message(event.reply_token, 'FlexMenu', message)
         return
-    else:                     message = a3rt.get_reply_message(text)
+    else:
+        a3rt = A3rt(A3RT_TALK_API_KEY)
+        message = a3rt.talk(text)
 
     util.reply(event.reply_token, message)
 
